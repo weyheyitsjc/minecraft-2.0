@@ -88,7 +88,7 @@ class Cube extends Drawable{
 
     static initialize() {
         Cube.computeNormals();
-    	Cube.shaderProgram = initShaders( gl, "/lightcubevshader.glsl", "/lightcubefshader.glsl");
+    	Cube.shaderProgram = initShaders( gl, "/glsl/lightcubevshader.glsl", "/glsl/lightcubefshader.glsl");
     	gl.useProgram(Cube.shaderProgram );
 		
         // Load the data into the GPU

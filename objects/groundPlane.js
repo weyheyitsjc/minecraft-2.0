@@ -75,7 +75,7 @@ class GroundPlane extends Drawable {
 
     static initialize() {
         GroundPlane.computeNormals();
-    	GroundPlane.shaderProgram = initShaders( gl, "/lightvshader.glsl", "/lightfshader.glsl");
+    	GroundPlane.shaderProgram = initShaders( gl, "/glsl/lightvshader.glsl", "/glsl/lightfshader.glsl");
     	gl.useProgram(GroundPlane.shaderProgram );
 		
         // Load the data into the GPU

@@ -35,7 +35,7 @@ class Plane extends Drawable{
     
     
     static initialize() {
-    	Plane.shaderProgram = initShaders( gl, "/vshader.glsl", "/fshader.glsl");
+    	Plane.shaderProgram = initShaders( gl, "/glsl/vshader.glsl", "/glsl/fshader.glsl");
     	gl.useProgram(Plane.shaderProgram );
 		
         // Load the data into the GPU

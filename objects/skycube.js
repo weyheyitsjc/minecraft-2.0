@@ -41,7 +41,7 @@ class SkyCube extends Drawable{
     static imageLoaded = 0;
     
     static initialize() {
-    	SkyCube.shaderProgram = initShaders( gl, "/cubevshader.glsl", "/cubefshader.glsl");
+    	SkyCube.shaderProgram = initShaders( gl, "/glsl/cubevshader.glsl", "/glsl/cubefshader.glsl");
     	gl.useProgram(SkyCube.shaderProgram );
 		
         // Load the data into the GPU
