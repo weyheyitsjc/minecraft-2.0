@@ -80,7 +80,6 @@ class Cube extends Drawable{
             counts[c]++;
         
         }
-        console.log(Cube.vertexNormals)
         for (var i = 0; i < Cube.vertexPositions.length; i++) {
             Cube.vertexNormals[i] = mult(1.0/counts[i],normalSum[i]);
         }
