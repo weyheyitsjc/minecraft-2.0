@@ -88,7 +88,7 @@ class SkyCube extends Drawable{
             SkyCube.imageLoaded += 1;
         };
         
-        imagePX.src = "./textures/sky-right.jpg";
+        imagePX.src = "./textures/background/sky-right.jpg";
 
 
         imageNX.onload = function(){
@@ -98,7 +98,7 @@ class SkyCube extends Drawable{
             SkyCube.imageLoaded += 1;
         };
 
-        imageNX.src = "./textures/sky-left.jpg";
+        imageNX.src = "./textures/background/sky-left.jpg";
 
         imagePY.onload = function(){
             gl.bindTexture(gl.TEXTURE_CUBE_MAP, SkyCube.texture);
@@ -107,7 +107,7 @@ class SkyCube extends Drawable{
             SkyCube.imageLoaded += 1;
         };
 
-        imagePY.src = "./textures/sky-top.jpg";
+        imagePY.src = "./textures/background/sky-top.jpg";
 
 
         imageNY.onload = function(){
@@ -117,7 +117,7 @@ class SkyCube extends Drawable{
             SkyCube.imageLoaded += 1;
         };
 
-        imageNY.src = "./textures/sky-bottom.jpg";
+        imageNY.src = "./textures/background/sky-bottom.jpg";
 
 
         imagePZ.onload = function(){
@@ -127,7 +127,7 @@ class SkyCube extends Drawable{
             SkyCube.imageLoaded += 1;
         };
         
-        imagePZ.src = "./textures/sky-front.jpg";
+        imagePZ.src = "./textures/background/sky-front.jpg";
 
         imageNZ.onload = function(){
             gl.bindTexture(gl.TEXTURE_CUBE_MAP, SkyCube.texture);
@@ -136,7 +136,7 @@ class SkyCube extends Drawable{
             SkyCube.imageLoaded += 1;
         };
 
-        imageNZ.src = "./textures/sky-back.jpg";
+        imageNZ.src = "./textures/background/sky-back.jpg";
 
     }
     

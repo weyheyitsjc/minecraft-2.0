@@ -125,6 +125,7 @@ class Drawable{
 var groundPlane;
 var cube;
 var skyCube;
+var slime;
 
 window.onload = function init(){
     canvas = document.getElementById( "gl-canvas" );
@@ -142,6 +143,7 @@ window.onload = function init(){
 	skyCube = new SkyCube(0, 0, 0, 2, 0, 0, 0, amb, dif, spec, shine);
     groundPlane = new GroundPlane(0, 0, 0, 10, 0, 0, 0, amb, dif, spec, shine);
 	cube = new Cube(0, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
+	slime = new Slime(-2, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
 	
 	window.addEventListener("keydown", keyBoardFunction);
 	
@@ -173,6 +175,7 @@ function render(){
 		camera1.updateCameraMatrix();
         groundPlane.draw();
 		cube.draw();
+		slime.draw();
 
     }, 100 );  //10fps
 }
