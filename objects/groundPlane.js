@@ -134,7 +134,7 @@ class GroundPlane extends Drawable {
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST_MIPMAP_NEAREST);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
             
-            GroundPlane.imageLoaded += 1;
+            GroundPlane.imageLoaded++;
         }
         
         image.src = "./textures/256x grass block.png";
@@ -151,7 +151,7 @@ class GroundPlane extends Drawable {
     }
     
     draw() {
-        if((GroundPlane.texture == -1) && (GroundPlane.imageLoaded != 1))  //only draw when texture is loaded.
+        if((GroundPlane.texture == -1) || (GroundPlane.imageLoaded != 1))  //only draw when texture is loaded.
         	return;
         
         gl.useProgram(GroundPlane.shaderProgram);

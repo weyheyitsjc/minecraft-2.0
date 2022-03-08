@@ -85,7 +85,7 @@ class SkyCube extends Drawable{
             gl.bindTexture(gl.TEXTURE_CUBE_MAP, SkyCube.texture);
             gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, imagePX);
             
-            SkyCube.imageLoaded += 1;
+            SkyCube.imageLoaded++;
         };
         
         imagePX.src = "./textures/background/sky-right.jpg";
@@ -95,7 +95,7 @@ class SkyCube extends Drawable{
             gl.bindTexture(gl.TEXTURE_CUBE_MAP, SkyCube.texture);
             gl.texImage2D(gl.TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, imageNX);
             
-            SkyCube.imageLoaded += 1;
+            SkyCube.imageLoaded++;
         };
 
         imageNX.src = "./textures/background/sky-left.jpg";
@@ -104,7 +104,7 @@ class SkyCube extends Drawable{
             gl.bindTexture(gl.TEXTURE_CUBE_MAP, SkyCube.texture);
             gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, imagePY);
             
-            SkyCube.imageLoaded += 1;
+            SkyCube.imageLoaded++;
         };
 
         imagePY.src = "./textures/background/sky-top.jpg";
@@ -114,7 +114,7 @@ class SkyCube extends Drawable{
             gl.bindTexture(gl.TEXTURE_CUBE_MAP, SkyCube.texture);
             gl.texImage2D(gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, imageNY);
             
-            SkyCube.imageLoaded += 1;
+            SkyCube.imageLoaded++;
         };
 
         imageNY.src = "./textures/background/sky-bottom.jpg";
@@ -124,7 +124,7 @@ class SkyCube extends Drawable{
             gl.bindTexture(gl.TEXTURE_CUBE_MAP, SkyCube.texture);
             gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, imagePZ);
         
-            SkyCube.imageLoaded += 1;
+            SkyCube.imageLoaded++;
         };
         
         imagePZ.src = "./textures/background/sky-front.jpg";
@@ -133,7 +133,7 @@ class SkyCube extends Drawable{
             gl.bindTexture(gl.TEXTURE_CUBE_MAP, SkyCube.texture);
             gl.texImage2D(gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, imageNZ);
             
-            SkyCube.imageLoaded += 1;
+            SkyCube.imageLoaded++;
         };
 
         imageNZ.src = "./textures/background/sky-back.jpg";
@@ -150,7 +150,7 @@ class SkyCube extends Drawable{
     }
     
     draw() {
-        if(SkyCube.texture == -1 && SkyCube.imageLoaded != 6)  //only draw when texture is loaded.
+        if((SkyCube.texture == -1) || (SkyCube.imageLoaded != 6))  //only draw when texture is loaded.
         	return;
         
         gl.useProgram(SkyCube.shaderProgram);

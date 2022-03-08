@@ -211,7 +211,7 @@ class Slime extends Drawable{
     }
     
     draw() {
-        if(Slime.texture == -1 && Slime.imageLoaded != 6)  //only draw when texture is loaded.
+        if((Slime.texture == -1) || (Slime.imageLoaded != 6))  //only draw when texture is loaded.
         	return;
         
         gl.useProgram(Slime.shaderProgram);
