@@ -11,9 +11,12 @@ uniform mat4 modelMatrix, cameraMatrix, projectionMatrix;
 uniform vec4 matAmbient, matDiffuse, matSpecular;
 uniform float matAlpha;
 
+uniform vec3 lightDirection;
+uniform vec4 lightAmbient, lightDiffuse, lightSpecular;
+
 uniform vec3 spotlightLoc, spotlightDirection;
 uniform vec4 spotlightAmbient, spotlightDiffuse, spotlightSpecular;
-uniform float spotlightAlpha, spotlightCutoff;
+uniform float spotlightAlpha, spotlightCutoff, spotlightStatus;
 
 
 
@@ -27,6 +30,8 @@ void main()
     vec3 pos = (cameraMatrix*modelMatrix*vec4(aPosition,1.0)).xyz;
 
     //the ray from the vertex towards the light
+    //for a directional light, this is just -lightDirection
+    vec3 L = normalize((-cameraMatrix*vec4(lightDirection,0.0)).xyz);
     //for a spotlight this is just -lightdirection
     vec3 SL = normalize((-cameraMatrix*vec4(spotlightDirection,0.0)).xyz); 
     
@@ -35,6 +40,20 @@ void main()
     
     //normal in camera coordinates
     vec3 N = normalize(cameraMatrix*modelMatrix*vec4(aNormal,0)).xyz;
+    
+    //half-way vector	
+    vec3 H = normalize(L+E);
+    
+    //directional light
+    vec4 ambient = lightAmbient*matAmbient;
+    
+    float Kd = max(dot(L,N),0.0);
+    vec4 diffuse = Kd*lightDiffuse*matDiffuse;
+    
+    float Ks = pow(max(dot(N,H),0.0),matAlpha);
+    vec4 specular = Ks*lightSpecular*matSpecular;
+    
+    vec4 lightColor1 = ambient + diffuse + specular;
 
     //spotlight
     vec4 sAmbient = spotlightAmbient*matAmbient;
@@ -49,14 +68,19 @@ void main()
     vec3 LsToPoint = normalize(pos-spotlightLoc);
     float cSpot = pow(max(dot(LsToPoint,normalize(spotlightDirection)),0.0),spotlightAlpha);
     
-    vec4 lightColor;
+    vec4 lightColor2;
     
-    if (abs(acos(dot(LsToPoint,normalize(spotlightDirection)))) > (spotlightCutoff)){
-        lightColor = vec4(0.0,0.0,0.0,0.0);
-    } else {
-        lightColor = cSpot/pow((dot((pos-spotlightLoc),(pos-spotlightLoc))),0.15)*(sDiffuse + sSpecular) + sAmbient;
-    }
+    if (spotlightStatus > 0.5) {
+        if (abs(acos(dot(LsToPoint,normalize(spotlightDirection)))) > (spotlightCutoff)){
+            lightColor2 = vec4(0.0,0.0,0.0,0.0);
+        } else {
+            lightColor2 = cSpot/pow((dot((pos-spotlightLoc),(pos-spotlightLoc))),0.15)*(sAmbient + sDiffuse + sSpecular);
+        }
+    } 
 
+    //vec4 lightColor = lightColor2;
+
+    vec4 lightColor = lightColor1+lightColor2;
     lightColor.a = 1.0;
 
     vColor = lightColor;

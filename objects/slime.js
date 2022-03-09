@@ -39,6 +39,11 @@ class Slime extends Drawable{
     static uCameraMatrixShader = -1;
     static uProjectionMatrixShader = -1;
     
+    static uLightDirectionShader = -1;
+    static uLightAmbientShader = -1;
+    static uLightDiffuseShader = -1;
+    static uLightSpecularShader = -1;
+
     static uSpotLightDirectionShader = -1;
     static uSpotLightAmbientShader = -1;
     static uSpotLightDiffuseShader = -1;
@@ -46,6 +51,7 @@ class Slime extends Drawable{
     static uSpotLightLoc = -1;
 	static uSpotLightAlpha = -1;
 	static uSpotLightCutoff = -1;
+    static uSpotLightStatus = -1;
 
     static texture = -1;
     static textureUnit = -1;
@@ -114,6 +120,12 @@ class Slime extends Drawable{
 		Slime.uMatSpecularShader = gl.getUniformLocation( Slime.shaderProgram, "matSpecular" );
 		Slime.uMatAlphaShader = gl.getUniformLocation( Slime.shaderProgram, "matAlpha" );
 
+        //directional light
+		Slime.uLightDirectionShader = gl.getUniformLocation( Slime.shaderProgram, "lightDirection" );
+		Slime.uLightAmbientShader = gl.getUniformLocation( Slime.shaderProgram, "lightAmbient" );
+		Slime.uLightDiffuseShader = gl.getUniformLocation( Slime.shaderProgram, "lightDiffuse" );
+		Slime.uLightSpecularShader = gl.getUniformLocation( Slime.shaderProgram, "lightSpecular" );
+
         //spotlight
 		Slime.uSpotLightDirectionShader = gl.getUniformLocation( Slime.shaderProgram, "spotlightDirection" );
 		Slime.uSpotLightAmbientShader = gl.getUniformLocation( Slime.shaderProgram, "spotlightAmbient" );
@@ -122,6 +134,7 @@ class Slime extends Drawable{
         Slime.uSpotLightLoc = gl.getUniformLocation( Slime.shaderProgram, "spotlightLoc");
 		Slime.uSpotLightAlpha = gl.getUniformLocation( Slime.shaderProgram, "spotlightAlpha");
 		Slime.uSpotLightCutoff = gl.getUniformLocation( Slime.shaderProgram, "spotlightCutoff");
+        Slime.uSpotLightStatus = gl.getUniformLocation( Slime.shaderProgram, "spotlightStatus");
 
     }
     
@@ -232,15 +245,21 @@ class Slime extends Drawable{
 		gl.uniform4fv(Slime.uMatSpecularShader, this.matSpecular);
 		gl.uniform1f(Slime.uMatAlphaShader, this.matAlpha);
 
+        //directional light
+		gl.uniform3fv(Slime.uLightDirectionShader, light1.direction);
+		gl.uniform4fv(Slime.uLightAmbientShader, light1.ambient);
+		gl.uniform4fv(Slime.uLightDiffuseShader, light1.diffuse);
+		gl.uniform4fv(Slime.uLightSpecularShader, light1.specular);
 
         //spotlight
-		gl.uniform3fv(Slime.uSpotLightDirectionShader, light1.direction);
-		gl.uniform4fv(Slime.uSpotLightAmbientShader, light1.ambient);
-		gl.uniform4fv(Slime.uSpotLightDiffuseShader, light1.diffuse);
-		gl.uniform4fv(Slime.uSpotLightSpecularShader, light1.specular);
-        gl.uniform3fv(Slime.uSpotLightLoc, light1.location);
-		gl.uniform1f(Slime.uSpotLightAlpha, light1.alpha); 
-		gl.uniform1f(Slime.uSpotLightCutoff, light1.cutoff); 
+		gl.uniform3fv(Slime.uSpotLightDirectionShader, light2.direction);
+		gl.uniform4fv(Slime.uSpotLightAmbientShader, light2.ambient);
+		gl.uniform4fv(Slime.uSpotLightDiffuseShader, light2.diffuse);
+		gl.uniform4fv(Slime.uSpotLightSpecularShader, light2.specular);
+        gl.uniform3fv(Slime.uSpotLightLoc, light2.location);
+		gl.uniform1f(Slime.uSpotLightAlpha, light2.alpha); 
+		gl.uniform1f(Slime.uSpotLightCutoff, light2.cutoff); 
+        gl.uniform1f(Slime.uSpotLightStatus, light2.status); 
                     
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, Slime.indexBuffer);
 	

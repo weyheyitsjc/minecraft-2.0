@@ -39,6 +39,11 @@ class Cube extends Drawable{
     static uCameraMatrixShader = -1;
     static uProjectionMatrixShader = -1;
     
+    static uLightDirectionShader = -1;
+    static uLightAmbientShader = -1;
+    static uLightDiffuseShader = -1;
+    static uLightSpecularShader = -1;
+
     static uSpotLightDirectionShader = -1;
     static uSpotLightAmbientShader = -1;
     static uSpotLightDiffuseShader = -1;
@@ -46,6 +51,7 @@ class Cube extends Drawable{
     static uSpotLightLoc = -1;
 	static uSpotLightAlpha = -1;
 	static uSpotLightCutoff = -1;
+    static uSpotLightStatus = -1;
 
     static texture = -1;
     static textureUnit = -1;
@@ -114,6 +120,12 @@ class Cube extends Drawable{
 		Cube.uMatSpecularShader = gl.getUniformLocation( Cube.shaderProgram, "matSpecular" );
 		Cube.uMatAlphaShader = gl.getUniformLocation( Cube.shaderProgram, "matAlpha" );
 
+        //directional light
+		Cube.uLightDirectionShader = gl.getUniformLocation( Cube.shaderProgram, "lightDirection" );
+		Cube.uLightAmbientShader = gl.getUniformLocation( Cube.shaderProgram, "lightAmbient" );
+		Cube.uLightDiffuseShader = gl.getUniformLocation( Cube.shaderProgram, "lightDiffuse" );
+		Cube.uLightSpecularShader = gl.getUniformLocation( Cube.shaderProgram, "lightSpecular" );
+
         //spotlight
 		Cube.uSpotLightDirectionShader = gl.getUniformLocation( Cube.shaderProgram, "spotlightDirection" );
 		Cube.uSpotLightAmbientShader = gl.getUniformLocation( Cube.shaderProgram, "spotlightAmbient" );
@@ -122,6 +134,7 @@ class Cube extends Drawable{
         Cube.uSpotLightLoc = gl.getUniformLocation( Cube.shaderProgram, "spotlightLoc");
 		Cube.uSpotLightAlpha = gl.getUniformLocation( Cube.shaderProgram, "spotlightAlpha");
 		Cube.uSpotLightCutoff = gl.getUniformLocation( Cube.shaderProgram, "spotlightCutoff");
+        Cube.uSpotLightStatus = gl.getUniformLocation( Cube.shaderProgram, "spotlightStatus");
 
     }
     
@@ -232,15 +245,21 @@ class Cube extends Drawable{
 		gl.uniform4fv(Cube.uMatSpecularShader, this.matSpecular);
 		gl.uniform1f(Cube.uMatAlphaShader, this.matAlpha);
 
+        //directional light
+		gl.uniform3fv(Cube.uLightDirectionShader, light1.direction);
+		gl.uniform4fv(Cube.uLightAmbientShader, light1.ambient);
+		gl.uniform4fv(Cube.uLightDiffuseShader, light1.diffuse);
+		gl.uniform4fv(Cube.uLightSpecularShader, light1.specular);
 
         //spotlight
-		gl.uniform3fv(Cube.uSpotLightDirectionShader, light1.direction);
-		gl.uniform4fv(Cube.uSpotLightAmbientShader, light1.ambient);
-		gl.uniform4fv(Cube.uSpotLightDiffuseShader, light1.diffuse);
-		gl.uniform4fv(Cube.uSpotLightSpecularShader, light1.specular);
-        gl.uniform3fv(Cube.uSpotLightLoc, light1.location);
-		gl.uniform1f(Cube.uSpotLightAlpha, light1.alpha); 
-		gl.uniform1f(Cube.uSpotLightCutoff, light1.cutoff); 
+		gl.uniform3fv(Cube.uSpotLightDirectionShader, light2.direction);
+		gl.uniform4fv(Cube.uSpotLightAmbientShader, light2.ambient);
+		gl.uniform4fv(Cube.uSpotLightDiffuseShader, light2.diffuse);
+		gl.uniform4fv(Cube.uSpotLightSpecularShader, light2.specular);
+        gl.uniform3fv(Cube.uSpotLightLoc, light2.location);
+		gl.uniform1f(Cube.uSpotLightAlpha, light2.alpha); 
+		gl.uniform1f(Cube.uSpotLightCutoff, light2.cutoff); 
+        gl.uniform1f(Cube.uSpotLightStatus, light2.status); 
                     
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, Cube.indexBuffer);
 	

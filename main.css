@@ -1,0 +1,8 @@
+.parent {
+    width: 50%;
+}
+
+.child {
+    float: left; 
+    width: 50%;
+}

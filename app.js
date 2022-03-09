@@ -89,7 +89,9 @@ class Camera{
 
 var camera1 = new Camera(vec3(0,5,5), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 camera1.setRotationX(-45);
-var light1 = new Light(vec3(0,0,0), mult(-1,camera1.n), vec4(0.7, 0.7, 0.7, 1), vec4(0.9, 0.9, 0.9, 1), vec4(0.8, 0.8, 0.8, 1), 4, 90, 0); // spot light
+
+var light1 = new Light(vec3(0,0,0), vec3(0,-1,-1), vec4(0.2,0.2,0.2,1.0), vec4(0.5,0.5,0.5,1), vec4(0.4,0.4,0.4,1), 0, 0, 1); // directional light
+var light2 = new Light(vec3(0,0,0), mult(-1,camera1.n), vec4(0.6, 0.6, 0.6, 1), vec4(0.9, 0.9, 0.9, 1), vec4(0.8, 0.8, 0.8, 1), 4, 45, 0); // spot light
 
 class Drawable{
     constructor(tx,ty,tz,scale,rotX, rotY, rotZ, amb, dif, sp, sh){
@@ -141,7 +143,7 @@ window.onload = function init(){
     var spec = vec4(1.0,1.0,1.0,1.0);
     var shine = 100.0
 	skyCube = new SkyCube(0, 0, 0, 2, 0, 0, 0, amb, dif, spec, shine);
-    groundPlane = new GroundPlane(0, 0, 0, 10, 0, 0, 0, amb, dif, spec, shine);
+    groundPlane = new GroundPlane(0, 0, 0, 100, 0, 0, 0, amb, dif, spec, shine);
 	cube = new Cube(0, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
 	slime = new Slime(-2, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
 	
@@ -185,11 +187,11 @@ function keyBoardFunction(event) {
 	let angleStep = 0.5;
 	switch (event.key) {
 		case " ":
-			// if (light2.status == 0){
-			// 	light2.turnOn();
-			// } else {
-			// 	light2.turnOff();
-			// }
+			if (light2.status == 0){
+				light2.turnOn();
+			} else {
+				light2.turnOff();
+			}
 			break;
 		case "ArrowUp":
 			camera1.vrp = subtract(camera1.vrp, mult(stepRatio, camera1.n));
@@ -223,8 +225,8 @@ function keyBoardFunction(event) {
 			break;
 	}
 	camera1.updateCameraMatrix();
-	light1.loc = camera1.vrp;
-	light1.direction = mult(-1,camera1.n);
+	light2.loc = camera1.vrp;
+	light2.direction = mult(-1,camera1.n);
 }
 
 

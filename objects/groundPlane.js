@@ -26,6 +26,11 @@ class GroundPlane extends Drawable {
     static uMatSpecularShader = -1;
     static uMatAlphaShader = -1;
 
+    static uLightDirectionShader = -1;
+    static uLightAmbientShader = -1;
+    static uLightDiffuseShader = -1;
+    static uLightSpecularShader = -1;
+
     static uSpotLightDirectionShader = -1;
     static uSpotLightAmbientShader = -1;
     static uSpotLightDiffuseShader = -1;
@@ -33,6 +38,8 @@ class GroundPlane extends Drawable {
     static uSpotLightLoc = -1;
 	static uSpotLightAlpha = -1;
 	static uSpotLightCutoff = -1;
+    static uSpotLightStatus = -1;
+
     
     static texture = -1;
     static uTextureUnit = -1;
@@ -111,6 +118,12 @@ class GroundPlane extends Drawable {
 		GroundPlane.uMatSpecularShader = gl.getUniformLocation( GroundPlane.shaderProgram, "matSpecular" );
 		GroundPlane.uMatAlphaShader = gl.getUniformLocation( GroundPlane.shaderProgram, "matAlpha" );
 
+        //directional light
+		GroundPlane.uLightDirectionShader = gl.getUniformLocation( GroundPlane.shaderProgram, "lightDirection" );
+		GroundPlane.uLightAmbientShader = gl.getUniformLocation( GroundPlane.shaderProgram, "lightAmbient" );
+		GroundPlane.uLightDiffuseShader = gl.getUniformLocation( GroundPlane.shaderProgram, "lightDiffuse" );
+		GroundPlane.uLightSpecularShader = gl.getUniformLocation( GroundPlane.shaderProgram, "lightSpecular" );
+
         //spotlight
 		GroundPlane.uSpotLightDirectionShader = gl.getUniformLocation( GroundPlane.shaderProgram, "spotlightDirection" );
 		GroundPlane.uSpotLightAmbientShader = gl.getUniformLocation( GroundPlane.shaderProgram, "spotlightAmbient" );
@@ -119,6 +132,7 @@ class GroundPlane extends Drawable {
         GroundPlane.uSpotLightLoc = gl.getUniformLocation( GroundPlane.shaderProgram, "spotlightLoc");
 		GroundPlane.uSpotLightAlpha = gl.getUniformLocation( GroundPlane.shaderProgram, "spotlightAlpha");
 		GroundPlane.uSpotLightCutoff = gl.getUniformLocation( GroundPlane.shaderProgram, "spotlightCutoff");
+        GroundPlane.uSpotLightStatus = gl.getUniformLocation( GroundPlane.shaderProgram, "spotlightStatus");
 
     }
     
@@ -179,14 +193,21 @@ class GroundPlane extends Drawable {
 		gl.uniform4fv(GroundPlane.uMatSpecularShader, this.matSpecular);
 		gl.uniform1f(GroundPlane.uMatAlphaShader, this.matAlpha);
 
+        //directional light
+		gl.uniform3fv(GroundPlane.uLightDirectionShader, light1.direction);
+		gl.uniform4fv(GroundPlane.uLightAmbientShader, light1.ambient);
+		gl.uniform4fv(GroundPlane.uLightDiffuseShader, light1.diffuse);
+		gl.uniform4fv(GroundPlane.uLightSpecularShader, light1.specular);
+
         //spotlight
-		gl.uniform3fv(GroundPlane.uSpotLightDirectionShader, light1.direction);
-		gl.uniform4fv(GroundPlane.uSpotLightAmbientShader, light1.ambient);
-		gl.uniform4fv(GroundPlane.uSpotLightDiffuseShader, light1.diffuse);
-		gl.uniform4fv(GroundPlane.uSpotLightSpecularShader, light1.specular);
-        gl.uniform3fv(GroundPlane.uSpotLightLoc, light1.location);
-		gl.uniform1f(GroundPlane.uSpotLightAlpha, light1.alpha); 
-		gl.uniform1f(GroundPlane.uSpotLightCutoff, light1.cutoff); 
+		gl.uniform3fv(GroundPlane.uSpotLightDirectionShader, light2.direction);
+		gl.uniform4fv(GroundPlane.uSpotLightAmbientShader, light2.ambient);
+		gl.uniform4fv(GroundPlane.uSpotLightDiffuseShader, light2.diffuse);
+		gl.uniform4fv(GroundPlane.uSpotLightSpecularShader, light2.specular);
+        gl.uniform3fv(GroundPlane.uSpotLightLoc, light2.location);
+		gl.uniform1f(GroundPlane.uSpotLightAlpha, light2.alpha); 
+		gl.uniform1f(GroundPlane.uSpotLightCutoff, light2.cutoff); 
+        gl.uniform1f(GroundPlane.uSpotLightStatus, light2.status); 
                     
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, GroundPlane.indexBuffer);
 	
@@ -205,7 +226,7 @@ class GroundPlane extends Drawable {
 		let v2 = vec3( 0.5, 0.0,-0.5); // back right
         let v3 = vec3(-0.5, 0.0,-0.5); // back Left
 
-        this.divideQuad(v0, v1, v2, v3, 4);
+        this.divideQuad(v0, v1, v2, v3, 6);
     }
 
     divideQuad(a, b, c, d, depth) {
