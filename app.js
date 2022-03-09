@@ -184,6 +184,7 @@ function render(){
 		camera1.updateCameraMatrix();
         groundPlane.draw();
 		
+		// Slime split and merge animation while jumping
 		if (bgSlimeJumpCount != 10) {
 			slime.draw();
 			slime.ty += 0.2;
