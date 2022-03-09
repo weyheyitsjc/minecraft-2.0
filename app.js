@@ -147,6 +147,8 @@ window.onload = function init(){
 	
 	//objectList.push(new Cube(-2, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
 	slime = new Slime(0, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
+	slime1 = new Slime(-0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
+	slime2 = new Slime(0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
 
 	objectList.push(new HouseBottom(0, 4, -8, 8, 0, 0, 0, amb, dif, spec, shine));
 	objectList.push(new HouseTop(0, 8, -8, 4, 0, 0, 0, amb, dif, spec, shine));
@@ -155,6 +157,9 @@ window.onload = function init(){
 	
     render();
 };
+
+var bgSlimeJumpCount = 0;
+var smSlimeJumpCount = 10;
 
 function render(){
     setTimeout(function(){
@@ -167,8 +172,6 @@ function render(){
 		let beforeN = camera1.n;
 		camera1.vrp = vec3(0,-0.5,0);  
 		camera1.updateCameraMatrix();
-		// Some issue with the background that require x/y rotation slightly to correct the render
-		//camera1.setRotationX(0.001);
 
 		gl.disable(gl.DEPTH_TEST);
 		skyCube.draw();
@@ -180,8 +183,37 @@ function render(){
 		camera1.n = beforeN;
 		camera1.updateCameraMatrix();
         groundPlane.draw();
+		
+		if (bgSlimeJumpCount != 10) {
+			slime.draw();
+			slime.ty += 0.2;
+			slime.updateModelMatrix();
+			bgSlimeJumpCount++;
 
-		slime.draw();
+			if (bgSlimeJumpCount == 9) {
+				slime1.ty = 2.3;
+				slime2.ty = 2.3;
+				slime1.updateModelMatrix();
+				slime2.updateModelMatrix();
+				smSlimeJumpCount = 10;
+
+			}
+		} else if(smSlimeJumpCount != 0) {
+			slime1.draw();
+			slime2.draw();
+			slime1.ty -= 0.2;
+			slime2.ty -= 0.2;
+			slime1.updateModelMatrix();
+			slime2.updateModelMatrix();
+			smSlimeJumpCount--;
+
+			if (smSlimeJumpCount == 1) {
+				slime.ty = 1;
+				slime.updateModelMatrix();
+				bgSlimeJumpCount = 0;
+			}
+		}
+
 
 		for (var i = 0; i<objectList.length; i++) {
             objectList[i].draw();
