@@ -87,9 +87,9 @@ class Camera{
 	}
 }
 
-var camera1 = new Camera(vec3(0,5,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 
-var light1 = new Light(vec3(0,0,0), vec3(0,-1,-1), vec4(0.2,0.2,0.2,1.0), vec4(0.5,0.5,0.5,1), vec4(0.4,0.4,0.4,1), 0, 0, 1); // directional light
+var light1 = new Light(vec3(0,0,0), vec3(0,-1,-1), vec4(0.1,0.1,0.1,1.0), vec4(0.4,0.4,0.4,1), vec4(0.3,0.3,0.3,1), 0, 0, 1); // directional light
 var light2 = new Light(vec3(0,0,0), mult(-1,camera1.n), vec4(0.6, 0.6, 0.6, 1), vec4(0.9, 0.9, 0.9, 1), vec4(0.8, 0.8, 0.8, 1), 4, 45, 0); // spot light
 
 class Drawable{
@@ -155,29 +155,29 @@ window.onload = function init(){
 
 	makeTree(3, 5);
 
-	objectList.push(new HouseBottom(-36, 4, -36, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
-	objectList.push(new HouseTopWood(-36, 8, -36, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
+	objectList.push(new HouseBottom(-36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
+	objectList.push(new HouseTopWood(-36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 
-	objectList.push(new HouseBottom(-18, 4, -36, 8, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
-	objectList.push(new HouseTopBrick(-18, 8, -36, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
+	objectList.push(new HouseBottom(-18, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
+	objectList.push(new HouseTopBrick(-18, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
 
-	objectList.push(new HouseBottom(0, 4, -36, 8, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
-	objectList.push(new HouseTopWood(0, 8, -36, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
+	objectList.push(new HouseBottom(0, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
+	objectList.push(new HouseTopWood(0, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
 
-	objectList.push(new HouseBottom(18, 4, -36, 8, 0, 0, 0, amb, dif, spec, shine)); // 4th house
-	objectList.push(new HouseTopBrick(18, 8, -36, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 4th house
+	objectList.push(new HouseBottom(18, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 4th house
+	objectList.push(new HouseTopBrick(18, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 4th house
 
-	objectList.push(new HouseBottom(36, 4, -36, 8, 0, 0, 0, amb, dif, spec, shine)); // 5th house
-	objectList.push(new HouseTopWood(36, 8, -36, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 5th house
+	objectList.push(new HouseBottom(36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 5th house
+	objectList.push(new HouseTopWood(36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 5th house
 
-	// for (let i = 0; i < 15; i++) {
-	// 	var x = Math.floor(Math.random() * (Math.floor(36) - Math.ceil(-36) + 1) + Math.ceil(-36));
-	// 	var z = Math.floor(Math.random() * (Math.floor(-42) - Math.ceil(-49) + 1) + Math.ceil(-50));
-	// 	objectList.push(new TreeBottomTriangle(x, 1, z, 1, 0, 0, 0, amb, dif, spec, shine));
-	// 	objectList.push(new TreeTopTriangle(x, 2.5, z, 1, 0, 0, 0, amb, dif, spec, shine));
-	// 	objectList.push(new TreeTopTriangle(x, 4.5, z, 0.8, 0, 0, 0, amb, dif, spec, shine));
-	// 	objectList.push(new TreeTopTriangle(x, 6.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
-	// }
+	for (let i = 0; i < 100; i++) {
+		var x = Math.floor(Math.random() * (Math.floor(36) - Math.ceil(-36) + 1) + Math.ceil(-36));
+		var z = Math.floor(Math.random() * (Math.floor(-42) - Math.ceil(-48) + 1) + Math.ceil(-48));
+		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 1.5, z, 1, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 3.5, z, 0.8, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
+	}
 	
 	window.addEventListener("keydown", keyBoardFunction);
 	
@@ -297,35 +297,35 @@ function keyBoardFunction(event) {
 }
 
 function makeTree(x, z) {
-	objectList.push(new TreeTrunk(x, 1, z, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeTrunk(x, 2.5, z, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeTrunk(x, 4, z, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeTrunk(x, 0.75, z, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeTrunk(x, 2.25, z, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeTrunk(x, 3.75, z, 1.5, 0, 0, 0, amb, dif, spec, shine));
 
-	objectList.push(new TreeLeaf(x-2.25, 5.5, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x-0.75, 5.5, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x+0.75, 5.5, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x+2.25, 5.5, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-2.25, 5.25, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-0.75, 5.25, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 5.25, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+2.25, 5.25, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
 
-	objectList.push(new TreeLeaf(x-2.25, 5.5, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x-0.75, 5.5, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x+0.75, 5.5, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x+2.25, 5.5, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-2.25, 5.25, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-0.75, 5.25, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 5.25, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+2.25, 5.25, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
 
-	objectList.push(new TreeLeaf(x-2.25, 5.5, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x-0.75, 5.5, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x+0.75, 5.5, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x+2.25, 5.5, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-2.25, 5.25, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-0.75, 5.25, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 5.25, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+2.25, 5.25, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
 
-	objectList.push(new TreeLeaf(x-2.25, 5.5, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x-0.75, 5.5, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x+0.75, 5.5, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x+2.25, 5.5, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-2.25, 5.25, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-0.75, 5.25, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 5.25, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+2.25, 5.25, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
 
-	objectList.push(new TreeLeaf(x-0.75, 6.5, z-0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x+0.75, 6.5, z-0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-0.75, 6.25, z-0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 6.25, z-0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
 
-	objectList.push(new TreeLeaf(x-0.75, 6.5, z+0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new TreeLeaf(x+0.75, 6.5, z+0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-0.75, 6.25, z+0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 6.25, z+0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
 
-	objectList.push(new TreeLeaf(x, 8.5, z, 2, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x, 8.25, z, 2, 0, 0, 0, amb, dif, spec, shine));
 }
