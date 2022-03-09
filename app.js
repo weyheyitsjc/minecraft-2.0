@@ -128,6 +128,10 @@ var skyCube;
 var slime;
 var slime1,slime2;
 var objectList = [];
+var amb = vec4(0.7,0.7,0.7,1.0);
+var dif = vec4(0.9,0.9,0.9,1.0);
+var spec = vec4(1.0,1.0,1.0,1.0);
+var shine = 100.0;
 
 window.onload = function init(){
     canvas = document.getElementById( "gl-canvas" );
@@ -138,10 +142,6 @@ window.onload = function init(){
     gl.clearColor( 0.9, 0.9, 0.9, 1.0 );
     gl.enable(gl.DEPTH_TEST);
 
-    var amb = vec4(0.7,0.7,0.7,1.0);
-    var dif = vec4(0.9,0.9,0.9,1.0);
-    var spec = vec4(1.0,1.0,1.0,1.0);
-    var shine = 100.0
 	skyCube = new SkyCube(0, 0, 0, 2, 0, 0, 0, amb, dif, spec, shine);
     groundPlane = new GroundPlane(0, 0, 0, 100, 0, 0, 0, amb, dif, spec, shine);
 	
@@ -150,8 +150,34 @@ window.onload = function init(){
 	slime1 = new Slime(-0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
 	slime2 = new Slime(0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
 
-	objectList.push(new HouseBottom(0, 4, -8, 8, 0, 0, 0, amb, dif, spec, shine));
-	objectList.push(new HouseTop(0, 8, -8, 4, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new HouseBottom(0, 4, -8, 8, 0, 0, 0, amb, dif, spec, shine)); // main house
+	objectList.push(new HouseTopBrick(0, 8, -8, 4.5, 0, 0, 0, amb, dif, spec, shine)); // main house
+
+	makeTree(3, 5);
+
+	objectList.push(new HouseBottom(-36, 4, -36, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
+	objectList.push(new HouseTopWood(-36, 8, -36, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
+
+	objectList.push(new HouseBottom(-18, 4, -36, 8, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
+	objectList.push(new HouseTopBrick(-18, 8, -36, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
+
+	objectList.push(new HouseBottom(0, 4, -36, 8, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
+	objectList.push(new HouseTopWood(0, 8, -36, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
+
+	objectList.push(new HouseBottom(18, 4, -36, 8, 0, 0, 0, amb, dif, spec, shine)); // 4th house
+	objectList.push(new HouseTopBrick(18, 8, -36, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 4th house
+
+	objectList.push(new HouseBottom(36, 4, -36, 8, 0, 0, 0, amb, dif, spec, shine)); // 5th house
+	objectList.push(new HouseTopWood(36, 8, -36, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 5th house
+
+	// for (let i = 0; i < 15; i++) {
+	// 	var x = Math.floor(Math.random() * (Math.floor(36) - Math.ceil(-36) + 1) + Math.ceil(-36));
+	// 	var z = Math.floor(Math.random() * (Math.floor(-42) - Math.ceil(-49) + 1) + Math.ceil(-50));
+	// 	objectList.push(new TreeBottomTriangle(x, 1, z, 1, 0, 0, 0, amb, dif, spec, shine));
+	// 	objectList.push(new TreeTopTriangle(x, 2.5, z, 1, 0, 0, 0, amb, dif, spec, shine));
+	// 	objectList.push(new TreeTopTriangle(x, 4.5, z, 0.8, 0, 0, 0, amb, dif, spec, shine));
+	// 	objectList.push(new TreeTopTriangle(x, 6.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
+	// }
 	
 	window.addEventListener("keydown", keyBoardFunction);
 	
@@ -270,4 +296,36 @@ function keyBoardFunction(event) {
 	light2.direction = mult(-1,camera1.n);
 }
 
+function makeTree(x, z) {
+	objectList.push(new TreeTrunk(x, 1, z, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeTrunk(x, 2.5, z, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeTrunk(x, 4, z, 1.5, 0, 0, 0, amb, dif, spec, shine));
 
+	objectList.push(new TreeLeaf(x-2.25, 5.5, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-0.75, 5.5, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 5.5, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+2.25, 5.5, z-2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+
+	objectList.push(new TreeLeaf(x-2.25, 5.5, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-0.75, 5.5, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 5.5, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+2.25, 5.5, z-0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+
+	objectList.push(new TreeLeaf(x-2.25, 5.5, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-0.75, 5.5, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 5.5, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+2.25, 5.5, z+0.75, 1.5, 0, 0, 0, amb, dif, spec, shine));
+
+	objectList.push(new TreeLeaf(x-2.25, 5.5, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x-0.75, 5.5, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 5.5, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+2.25, 5.5, z+2.25, 1.5, 0, 0, 0, amb, dif, spec, shine));
+
+	objectList.push(new TreeLeaf(x-0.75, 6.5, z-0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 6.5, z-0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
+
+	objectList.push(new TreeLeaf(x-0.75, 6.5, z+0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new TreeLeaf(x+0.75, 6.5, z+0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
+
+	objectList.push(new TreeLeaf(x, 8.5, z, 2, 0, 0, 0, amb, dif, spec, shine));
+}
