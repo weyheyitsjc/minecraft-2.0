@@ -87,8 +87,7 @@ class Camera{
 	}
 }
 
-var camera1 = new Camera(vec3(0,5,5), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
-camera1.setRotationX(-45);
+var camera1 = new Camera(vec3(0,5,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 
 var light1 = new Light(vec3(0,0,0), vec3(0,-1,-1), vec4(0.2,0.2,0.2,1.0), vec4(0.5,0.5,0.5,1), vec4(0.4,0.4,0.4,1), 0, 0, 1); // directional light
 var light2 = new Light(vec3(0,0,0), mult(-1,camera1.n), vec4(0.6, 0.6, 0.6, 1), vec4(0.9, 0.9, 0.9, 1), vec4(0.8, 0.8, 0.8, 1), 4, 45, 0); // spot light
@@ -125,10 +124,10 @@ class Drawable{
 }
 
 var groundPlane;
-var cube;
 var skyCube;
 var slime;
-var houseBottom;
+var slime1,slime2;
+var objectList = [];
 
 window.onload = function init(){
     canvas = document.getElementById( "gl-canvas" );
@@ -145,9 +144,12 @@ window.onload = function init(){
     var shine = 100.0
 	skyCube = new SkyCube(0, 0, 0, 2, 0, 0, 0, amb, dif, spec, shine);
     groundPlane = new GroundPlane(0, 0, 0, 100, 0, 0, 0, amb, dif, spec, shine);
-	cube = new Cube(0, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
-	slime = new Slime(-2, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
-	houseBottom = new HouseBottom(0, 1, 0, 8, 0, 0, 0, amb, dif, spec, shine)
+	
+	//objectList.push(new Cube(-2, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
+	slime = new Slime(0, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
+
+	objectList.push(new HouseBottom(0, 4, -8, 8, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new HouseTop(0, 8, -8, 4, 0, 0, 0, amb, dif, spec, shine));
 	
 	window.addEventListener("keydown", keyBoardFunction);
 	
@@ -163,10 +165,10 @@ function render(){
 		let beforeU = camera1.u;
 		let beforeV = camera1.v;
 		let beforeN = camera1.n;
-		camera1.vrp = vec3(0,0,0);  
+		camera1.vrp = vec3(0,-0.5,0);  
 		camera1.updateCameraMatrix();
 		// Some issue with the background that require x/y rotation slightly to correct the render
-		camera1.setRotationX(0.001);
+		//camera1.setRotationX(0.001);
 
 		gl.disable(gl.DEPTH_TEST);
 		skyCube.draw();
@@ -178,9 +180,12 @@ function render(){
 		camera1.n = beforeN;
 		camera1.updateCameraMatrix();
         groundPlane.draw();
-		cube.draw();
+
 		slime.draw();
-		houseBottom.draw();
+
+		for (var i = 0; i<objectList.length; i++) {
+            objectList[i].draw();
+        }
 
     }, 100 );  //10fps
 }
