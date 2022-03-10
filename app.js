@@ -162,14 +162,14 @@ window.onload = function init(){
 	objectList.push(new HouseBottom(-36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 	objectList.push(new HouseTopWood(-36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 
-	objectList.push(new HouseBottom(-18, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
-	objectList.push(new HouseTopBrick(-18, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
+	objectList.push(new HouseBottom(-18, 4, -20, 8, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
+	objectList.push(new HouseTopBrick(-18, 8, -20, 4.5, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
 
 	objectList.push(new HouseBottom(0, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
 	objectList.push(new HouseTopWood(0, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
 
-	objectList.push(new HouseBottom(18, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 4th house
-	objectList.push(new HouseTopBrick(18, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 4th house
+	objectList.push(new HouseBottom(18, 4, -18, 8, 180, 0, 180, amb, dif, spec, shine)); // 4th house
+	objectList.push(new HouseTopBrick(18, 8, -18, 4.5, 180, 0, 180, amb, dif, spec, shine)); // 4th house
 
 	objectList.push(new HouseBottom(36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 5th house
 	objectList.push(new HouseTopWood(36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 5th house
@@ -202,7 +202,7 @@ function render(){
 		let beforeN = camera1.n;
 		camera1.vrp = vec3(0,-0.5,0);  
 		camera1.updateCameraMatrix();
-		env.draw();
+		// env.draw();
 		gl.disable(gl.DEPTH_TEST);
 		skyCube.draw();
 		gl.enable(gl.DEPTH_TEST);
