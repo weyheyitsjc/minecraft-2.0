@@ -103,6 +103,10 @@ class TreeTrunk extends Drawable{
         
         TreeTrunk.textureUnit = gl.getUniformLocation(TreeTrunk.shaderProgram, "textureUnit");
 
+        TreeTrunk.normalBuffer = gl.createBuffer();
+		gl.bindBuffer( gl.ARRAY_BUFFER, TreeTrunk.normalBuffer);
+		gl.bufferData( gl.ARRAY_BUFFER, flatten(TreeTrunk.vertexNormals), gl.STATIC_DRAW );
+
         TreeTrunk.indexBuffer = gl.createBuffer();
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, TreeTrunk.indexBuffer);
         gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(TreeTrunk.indices), gl.STATIC_DRAW );
@@ -236,6 +240,9 @@ class TreeTrunk extends Drawable{
        	gl.activeTexture(gl.TEXTURE0);
        	gl.bindTexture(gl.TEXTURE_CUBE_MAP, TreeTrunk.texture);
        	gl.uniform1i(TreeTrunk.textureUnit,0);
+        
+        gl.bindBuffer( gl.ARRAY_BUFFER, TreeTrunk.normalBuffer);
+       	gl.vertexAttribPointer(TreeTrunk.aNormalShader, 3, gl.FLOAT, false, 0, 0 );
 	
        	gl.uniformMatrix4fv(TreeTrunk.uModelMatrixShader, false, flatten(this.modelMatrix));
         gl.uniformMatrix4fv(TreeTrunk.uCameraMatrixShader, false, flatten(camera1.cameraMatrix));

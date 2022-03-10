@@ -103,6 +103,10 @@ class Slime extends Drawable{
         
         Slime.textureUnit = gl.getUniformLocation(Slime.shaderProgram, "textureUnit");
 
+        Slime.normalBuffer = gl.createBuffer();
+		gl.bindBuffer( gl.ARRAY_BUFFER, Slime.normalBuffer);
+		gl.bufferData( gl.ARRAY_BUFFER, flatten(Slime.vertexNormals), gl.STATIC_DRAW );
+
         Slime.indexBuffer = gl.createBuffer();
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, Slime.indexBuffer);
         gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(Slime.indices), gl.STATIC_DRAW );
@@ -236,6 +240,9 @@ class Slime extends Drawable{
        	gl.activeTexture(gl.TEXTURE0);
        	gl.bindTexture(gl.TEXTURE_CUBE_MAP, Slime.texture);
        	gl.uniform1i(Slime.textureUnit,0);
+        
+        gl.bindBuffer( gl.ARRAY_BUFFER, Slime.normalBuffer);
+       	gl.vertexAttribPointer(Slime.aNormalShader, 3, gl.FLOAT, false, 0, 0 );
 	
        	gl.uniformMatrix4fv(Slime.uModelMatrixShader, false, flatten(this.modelMatrix));
         gl.uniformMatrix4fv(Slime.uCameraMatrixShader, false, flatten(camera1.cameraMatrix));
