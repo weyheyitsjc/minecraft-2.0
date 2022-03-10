@@ -147,19 +147,18 @@ class EnvMapSphere extends Drawable{
         EnvMapSphere.texture = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_CUBE_MAP, EnvMapSphere.texture);
 
-        gl.texParameterf(gl.TEXTURE_CUBE_MAP,gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-        gl.texParameterf(gl.TEXTURE_CUBE_MAP,gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-        gl.texParameterf(gl.TEXTURE_CUBE_MAP,gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameterf(gl.TEXTURE_CUBE_MAP,gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texParameterf(gl.TEXTURE_CUBE_MAP,gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_CUBE_MAP,gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_CUBE_MAP,gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_CUBE_MAP,gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_CUBE_MAP,gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_CUBE_MAP,gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE);
 
-
-        gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl.RGB, EnvMapSphere.texsize, EnvMapSphere.texsize, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
-        gl.texImage2D(gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl.RGB, EnvMapSphere.texsize, EnvMapSphere.texsize, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
-        gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl.RGB, EnvMapSphere.texsize, EnvMapSphere.texsize, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
-        gl.texImage2D(gl.TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl.RGB, EnvMapSphere.texsize, EnvMapSphere.texsize, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
-        gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl.RGB, EnvMapSphere.texsize, EnvMapSphere.texsize, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
         gl.texImage2D(gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl.RGB, EnvMapSphere.texsize, EnvMapSphere.texsize, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
+        gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl.RGB, EnvMapSphere.texsize, EnvMapSphere.texsize, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
+        gl.texImage2D(gl.TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl.RGB, EnvMapSphere.texsize, EnvMapSphere.texsize, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
+        gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl.RGB, EnvMapSphere.texsize, EnvMapSphere.texsize, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
+        gl.texImage2D(gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl.RGB, EnvMapSphere.texsize, EnvMapSphere.texsize, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
+        gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl.RGB, EnvMapSphere.texsize, EnvMapSphere.texsize, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
         
         EnvMapSphere.envFrameBuffer = gl.createFramebuffer();
         EnvMapSphere.envFrameBuffer.width = EnvMapSphere.texsize;
@@ -260,38 +259,38 @@ class EnvMapSphere extends Drawable{
                 camera1.u = vec3(1,0,0);
                 camera1.v = vec3(0,1,0);
                 camera1.n = vec3(0,0,1);
-                gl.framebufferTxexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, EnvMapSphere.texture, 0);
+                gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, EnvMapSphere.texture, 0);
                 break;
                 
-                case 0: //z
+                case 1: //z
                 camera1.u = vec3(1,0,0);
                 camera1.v = vec3(0,1,0);
                 camera1.n = vec3(0,0,-1);
-                gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_POSITIVE_Y, EnvMapSphere.texture, 0);
+                gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_POSITIVE_Z, EnvMapSphere.texture, 0);
                 break;
 
-                case 0: //-x
+                case 2: //-x
                 camera1.u = vec3(0,0,-1);
                 camera1.v = vec3(0,1,0);
                 camera1.n = vec3(-1,0,0);
                 gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_NEGATIVE_X, EnvMapSphere.texture, 0);
                 break;
 
-                case 0: //x
+                case 3: //x
                 camera1.u = vec3(0,0,1);
                 camera1.v = vec3(0,1,0);
                 camera1.n = vec3(1,0,0);
                 gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_POSITIVE_X, EnvMapSphere.texture, 0);
                 break;
 
-                case 0: //-y
+                case 4: //-y
                 camera1.u = vec3(1,0,0);
                 camera1.v = vec3(0,0,-1);
                 camera1.n = vec3(0,1,0);
                 gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, EnvMapSphere.texture, 0);
                 break;
 
-                case 0: //y
+                case 5: //y
                 camera1.u = vec3(1,0,0);
                 camera1.v = vec3(0,0,1);
                 camera1.n = vec3(0,-1,0);
@@ -317,7 +316,7 @@ class EnvMapSphere extends Drawable{
             camera1.n = beforeN;
             camera1.updateCameraMatrix();
             groundPlane.draw();
-            slime.draw();
+            // slime.draw();
 
             for(var i = 0; i < objectList.length; i++) {
                 if(objectList[i]!=this) {

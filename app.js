@@ -129,6 +129,7 @@ var skyCube;
 var slime;
 var slime1,slime2;
 var objectList = [];
+var env;
 var amb = vec4(0.7,0.7,0.7,1.0);
 var dif = vec4(0.9,0.9,0.9,1.0);
 var spec = vec4(1.0,1.0,1.0,1.0);
@@ -146,8 +147,9 @@ window.onload = function init(){
 	skyCube = new SkyCube(0, 0, 0, 2, 0, 0, 0, amb, dif, spec, shine);
 
     groundPlane = new GroundPlane(0, 0, 0, 100, 0, 0, 0, amb, dif, spec, shine);
+
+	env = new EnvMapSphere(-2, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
 	
-	objectList.push(new EnvMapSphere(-2, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine));
 	slime = new Slime(0, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
 	slime1 = new Slime(-0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
 	slime2 = new Slime(0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
@@ -200,7 +202,7 @@ function render(){
 		let beforeN = camera1.n;
 		camera1.vrp = vec3(0,-0.5,0);  
 		camera1.updateCameraMatrix();
-
+		env.draw();
 		gl.disable(gl.DEPTH_TEST);
 		skyCube.draw();
 		gl.enable(gl.DEPTH_TEST);
