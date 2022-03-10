@@ -206,8 +206,9 @@ class HouseTopBrick extends Drawable{
     }
     
     draw() {
-        if((HouseTopBrick.texture == -1) || (HouseTopBrick.imageLoaded != 1))  //only draw when texture is loaded.
+        if((HouseTopBrick.texture == -1) || (HouseTopBrick.imageLoaded != 1)) {  //only draw when texture is loaded.
         	return;
+        }
         
         gl.useProgram(HouseTopBrick.shaderProgram);
         

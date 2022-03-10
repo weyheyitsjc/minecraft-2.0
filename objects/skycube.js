@@ -150,9 +150,12 @@ class SkyCube extends Drawable{
     }
     
     draw() {
-        if((SkyCube.texture == -1) || (SkyCube.imageLoaded != 6))  //only draw when texture is loaded.
+        if((SkyCube.texture == -1) || (SkyCube.imageLoaded != 6)) { //only draw when texture is loaded.
         	return;
-        
+        }
+        // disable depth test before drawing
+        gl.disable(gl.DEPTH_TEST);
+
         gl.useProgram(SkyCube.shaderProgram);
         
         gl.bindBuffer( gl.ARRAY_BUFFER, SkyCube.positionBuffer);
@@ -161,15 +164,36 @@ class SkyCube extends Drawable{
        	gl.activeTexture(gl.TEXTURE0);
        	gl.bindTexture(gl.TEXTURE_CUBE_MAP, SkyCube.texture);
        	gl.uniform1i(SkyCube.textureUnit,0);
-	
+        
+        // Store current camera 
+        let beforePos = camera1.vrp;
+		let beforeU = camera1.u;
+		let beforeV = camera1.v;
+		let beforeN = camera1.n;
+
+        // Move camera inside skycube
+		camera1.vrp = vec3(0,this.ty-0.5,0);  
+		camera1.updateCameraMatrix();
+
        	gl.uniformMatrix4fv(SkyCube.uModelMatrixShader, false, flatten(this.modelMatrix));
         gl.uniformMatrix4fv(SkyCube.uCameraMatrixShader, false, flatten(camera1.cameraMatrix));
         gl.uniformMatrix4fv(SkyCube.uProjectionMatrixShader, false, flatten(camera1.projectionMatrix));
-                    
+        
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, SkyCube.indexBuffer);
 	
         gl.enableVertexAttribArray(SkyCube.aPositionShader);    
     	gl.drawElements(gl.TRIANGLES, SkyCube.indices.length, gl.UNSIGNED_INT, 0);
-    	gl.disableVertexAttribArray(SkyCube.aPositionShader);    
+    	gl.disableVertexAttribArray(SkyCube.aPositionShader);   
+        
+        // Restore camera
+        camera1.vrp = beforePos;
+		camera1.u = beforeU;
+		camera1.v = beforeV;
+		camera1.n = beforeN;
+		camera1.updateCameraMatrix();
+        
+        // renable depth test before drawing
+        gl.enable(gl.DEPTH_TEST);
+
     }
 }

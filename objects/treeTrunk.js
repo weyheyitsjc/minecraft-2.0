@@ -224,8 +224,9 @@ class TreeTrunk extends Drawable{
     }
     
     draw() {
-        if((TreeTrunk.texture == -1) || (TreeTrunk.imageLoaded != 6))  //only draw when texture is loaded.
+        if((TreeTrunk.texture == -1) || (TreeTrunk.imageLoaded != 6)) { //only draw when texture is loaded.
         	return;
+        }
         
         gl.useProgram(TreeTrunk.shaderProgram);
         

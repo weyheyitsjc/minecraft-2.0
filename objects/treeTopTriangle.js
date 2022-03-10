@@ -206,8 +206,9 @@ class TreeTopTriangle extends Drawable{
     }
     
     draw() {
-        if((TreeTopTriangle.texture == -1) || (TreeTopTriangle.imageLoaded != 1))  //only draw when texture is loaded.
+        if((TreeTopTriangle.texture == -1) || (TreeTopTriangle.imageLoaded != 1)) { //only draw when texture is loaded.
         	return;
+        }
         
         gl.useProgram(TreeTopTriangle.shaderProgram);
         
