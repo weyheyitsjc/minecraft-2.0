@@ -26,7 +26,7 @@ class Camera{
     	this.v = normalize(v);
     	this.n = normalize(n);
     	
-    	this.projectionMatrix = perspective(90.0,1.0,0.1,100);
+    	this.projectionMatrix = perspective(90.0, 1.0, 0.1, 100);
     	
     	this.updateCameraMatrix();
     }
@@ -89,6 +89,7 @@ class Camera{
 
 var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 
+
 var light1 = new Light(vec3(0,0,0), vec3(0,-1,-1), vec4(0.1,0.1,0.1,1.0), vec4(0.4,0.4,0.4,1), vec4(0.3,0.3,0.3,1), 0, 0, 1); // directional light
 var light2 = new Light(vec3(0,0,0), mult(-1,camera1.n), vec4(0.6, 0.6, 0.6, 1), vec4(0.9, 0.9, 0.9, 1), vec4(0.8, 0.8, 0.8, 1), 4, 45, 0); // spot light
 
@@ -143,9 +144,10 @@ window.onload = function init(){
     gl.enable(gl.DEPTH_TEST);
 
 	skyCube = new SkyCube(0, 0, 0, 2, 0, 0, 0, amb, dif, spec, shine);
+
     groundPlane = new GroundPlane(0, 0, 0, 100, 0, 0, 0, amb, dif, spec, shine);
 	
-	//objectList.push(new Cube(-2, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
+	objectList.push(new EnvMapSphere(-2, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine));
 	slime = new Slime(0, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
 	slime1 = new Slime(-0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
 	slime2 = new Slime(0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
