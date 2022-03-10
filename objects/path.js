@@ -165,8 +165,9 @@ class Path extends Drawable {
     }
     
     draw() {
-        if((Path.texture == -1) || (Path.imageLoaded != 1))  //only draw when texture is loaded.
+        if((Path.texture == -1) || (Path.imageLoaded != 1)) { //only draw when texture is loaded.
         	return;
+        }
         
         gl.useProgram(Path.shaderProgram);
         

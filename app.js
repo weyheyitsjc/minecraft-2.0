@@ -157,8 +157,8 @@ window.onload = function init(){
 	objectList.push(new HouseBottom(-36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 	objectList.push(new HouseTopWood(-36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 
-	objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); // path
-	objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); 
+	//objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); // path
+	//objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); 
 
 	objectList.push(new HouseBottom(-18, 4, -16, 8, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
 	objectList.push(new HouseTopBrick(-18, 8, -16, 4.5, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
