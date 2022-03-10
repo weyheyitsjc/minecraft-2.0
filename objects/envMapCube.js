@@ -94,6 +94,10 @@ class EnvMapCube extends Drawable{
         
         EnvMapCube.textureUnit = gl.getUniformLocation(EnvMapCube.shaderProgram, "textureUnit");
 
+        EnvMapCube.normalBuffer = gl.createBuffer();
+		gl.bindBuffer( gl.ARRAY_BUFFER, EnvMapCube.normalBuffer);
+		gl.bufferData( gl.ARRAY_BUFFER, flatten(EnvMapCube.vertexNormals), gl.STATIC_DRAW );
+
         EnvMapCube.indexBuffer = gl.createBuffer();
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, EnvMapCube.indexBuffer);
         gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(EnvMapCube.indices), gl.STATIC_DRAW );
@@ -161,10 +165,13 @@ class EnvMapCube extends Drawable{
         
         gl.bindBuffer( gl.ARRAY_BUFFER, EnvMapCube.positionBuffer);
        	gl.vertexAttribPointer(EnvMapCube.aPositionShader, 3, gl.FLOAT, false, 0, 0 );
-       	
+
        	gl.activeTexture(gl.TEXTURE0);
        	gl.bindTexture(gl.TEXTURE_CUBE_MAP, EnvMapCube.texture);
        	gl.uniform1i(EnvMapCube.textureUnit,0);
+        
+        gl.bindBuffer( gl.ARRAY_BUFFER, EnvMapCube.normalBuffer);
+       	gl.vertexAttribPointer(EnvMapCube.aNormalShader, 3, gl.FLOAT, false, 0, 0 );
 	
        	gl.uniformMatrix4fv(EnvMapCube.uModelMatrixShader, false, flatten(this.modelMatrix));
         gl.uniformMatrix4fv(EnvMapCube.uCameraMatrixShader, false, flatten(camera1.cameraMatrix));
@@ -253,12 +260,12 @@ class EnvMapCube extends Drawable{
                 }
             }
 
-            if (bgSlimeJumpCount != 10) {
-                slime.draw();
-            } else {
-                slime1.draw();
-                slime2.draw();
-            }
+            // if (bgSlimeJumpCount != 10) {
+            //     slime.draw();
+            // } else {
+            //     slime1.draw();
+            //     slime2.draw();
+            // }
 
             EnvMapCube.imageLoaded ++;
         }

@@ -103,6 +103,10 @@ class TreeLeaf extends Drawable{
         
         TreeLeaf.textureUnit = gl.getUniformLocation(TreeLeaf.shaderProgram, "textureUnit");
 
+        TreeLeaf.normalBuffer = gl.createBuffer();
+		gl.bindBuffer( gl.ARRAY_BUFFER, TreeLeaf.normalBuffer);
+		gl.bufferData( gl.ARRAY_BUFFER, flatten(TreeLeaf.vertexNormals), gl.STATIC_DRAW );
+
         TreeLeaf.indexBuffer = gl.createBuffer();
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, TreeLeaf.indexBuffer);
         gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(TreeLeaf.indices), gl.STATIC_DRAW );
@@ -232,10 +236,13 @@ class TreeLeaf extends Drawable{
         
         gl.bindBuffer( gl.ARRAY_BUFFER, TreeLeaf.positionBuffer);
        	gl.vertexAttribPointer(TreeLeaf.aPositionShader, 3, gl.FLOAT, false, 0, 0 );
-       	
+
        	gl.activeTexture(gl.TEXTURE0);
        	gl.bindTexture(gl.TEXTURE_CUBE_MAP, TreeLeaf.texture);
        	gl.uniform1i(TreeLeaf.textureUnit,0);
+        
+        gl.bindBuffer( gl.ARRAY_BUFFER, TreeLeaf.normalBuffer);
+       	gl.vertexAttribPointer(TreeLeaf.aNormalShader, 3, gl.FLOAT, false, 0, 0 );
 	
        	gl.uniformMatrix4fv(TreeLeaf.uModelMatrixShader, false, flatten(this.modelMatrix));
         gl.uniformMatrix4fv(TreeLeaf.uCameraMatrixShader, false, flatten(camera1.cameraMatrix));

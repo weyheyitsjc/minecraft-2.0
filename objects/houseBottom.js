@@ -103,6 +103,10 @@ class HouseBottom extends Drawable{
         
         HouseBottom.textureUnit = gl.getUniformLocation(HouseBottom.shaderProgram, "textureUnit");
 
+        HouseBottom.normalBuffer = gl.createBuffer();
+		gl.bindBuffer( gl.ARRAY_BUFFER, HouseBottom.normalBuffer);
+		gl.bufferData( gl.ARRAY_BUFFER, flatten(HouseBottom.vertexNormals), gl.STATIC_DRAW );
+
         HouseBottom.indexBuffer = gl.createBuffer();
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, HouseBottom.indexBuffer);
         gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(HouseBottom.indices), gl.STATIC_DRAW );
@@ -232,10 +236,13 @@ class HouseBottom extends Drawable{
         
         gl.bindBuffer( gl.ARRAY_BUFFER, HouseBottom.positionBuffer);
        	gl.vertexAttribPointer(HouseBottom.aPositionShader, 3, gl.FLOAT, false, 0, 0 );
-       	
+
        	gl.activeTexture(gl.TEXTURE0);
        	gl.bindTexture(gl.TEXTURE_CUBE_MAP, HouseBottom.texture);
        	gl.uniform1i(HouseBottom.textureUnit,0);
+
+        gl.bindBuffer( gl.ARRAY_BUFFER, HouseBottom.normalBuffer);
+       	gl.vertexAttribPointer(HouseBottom.aNormalShader, 3, gl.FLOAT, false, 0, 0 );
 	
        	gl.uniformMatrix4fv(HouseBottom.uModelMatrixShader, false, flatten(this.modelMatrix));
         gl.uniformMatrix4fv(HouseBottom.uCameraMatrixShader, false, flatten(camera1.cameraMatrix));

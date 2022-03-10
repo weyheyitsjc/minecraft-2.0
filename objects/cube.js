@@ -103,6 +103,10 @@ class Cube extends Drawable{
         
         Cube.textureUnit = gl.getUniformLocation(Cube.shaderProgram, "textureUnit");
 
+        Cube.normalBuffer = gl.createBuffer();
+		gl.bindBuffer( gl.ARRAY_BUFFER, Cube.normalBuffer);
+		gl.bufferData( gl.ARRAY_BUFFER, flatten(Cube.vertexNormals), gl.STATIC_DRAW );
+
         Cube.indexBuffer = gl.createBuffer();
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, Cube.indexBuffer);
         gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(Cube.indices), gl.STATIC_DRAW );
@@ -232,10 +236,13 @@ class Cube extends Drawable{
         
         gl.bindBuffer( gl.ARRAY_BUFFER, Cube.positionBuffer);
        	gl.vertexAttribPointer(Cube.aPositionShader, 3, gl.FLOAT, false, 0, 0 );
-       	
+
        	gl.activeTexture(gl.TEXTURE0);
        	gl.bindTexture(gl.TEXTURE_CUBE_MAP, Cube.texture);
        	gl.uniform1i(Cube.textureUnit,0);
+        
+        gl.bindBuffer( gl.ARRAY_BUFFER, Cube.normalBuffer);
+       	gl.vertexAttribPointer(Cube.aNormalShader, 3, gl.FLOAT, false, 0, 0 );
 	
        	gl.uniformMatrix4fv(Cube.uModelMatrixShader, false, flatten(this.modelMatrix));
         gl.uniformMatrix4fv(Cube.uCameraMatrixShader, false, flatten(camera1.cameraMatrix));
