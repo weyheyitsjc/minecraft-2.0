@@ -124,12 +124,10 @@ class Drawable{
     }
 }
 
-var groundPlane;
-var skyCube;
 var slime;
 var slime1,slime2;
 var objectList = [];
-var env;
+var envCube;
 var amb = vec4(0.7,0.7,0.7,1.0);
 var dif = vec4(0.9,0.9,0.9,1.0);
 var spec = vec4(1.0,1.0,1.0,1.0);
@@ -144,11 +142,8 @@ window.onload = function init(){
     gl.clearColor( 0.9, 0.9, 0.9, 1.0 );
     gl.enable(gl.DEPTH_TEST);
 
-	skyCube = new SkyCube(0, 0, 0, 2, 0, 0, 0, amb, dif, spec, shine);
-
-    groundPlane = new GroundPlane(0, 0, 0, 100, 0, 0, 0, amb, dif, spec, shine);
-
-	env = new EnvMapSphere(-2, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
+	objectList.push(new SkyCube(0, 0, 0, 2, 0, 0, 0, amb, dif, spec, shine));
+    objectList.push(new GroundPlane(0, 0, 0, 100, 0, 0, 0, amb, dif, spec, shine));
 	
 	slime = new Slime(0, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
 	slime1 = new Slime(-0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
@@ -162,14 +157,17 @@ window.onload = function init(){
 	objectList.push(new HouseBottom(-36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 	objectList.push(new HouseTopWood(-36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 
-	objectList.push(new HouseBottom(-18, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
-	objectList.push(new HouseTopBrick(-18, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
+	//objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); // path
+	//objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); 
+
+	objectList.push(new HouseBottom(-18, 4, -16, 8, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
+	objectList.push(new HouseTopBrick(-18, 8, -16, 4.5, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
 
 	objectList.push(new HouseBottom(0, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
 	objectList.push(new HouseTopWood(0, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
 
-	objectList.push(new HouseBottom(18, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 4th house
-	objectList.push(new HouseTopBrick(18, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 4th house
+	objectList.push(new HouseBottom(18, 4, -14, 8, 180, 0, 180, amb, dif, spec, shine)); // 4th house
+	objectList.push(new HouseTopBrick(18, 8, -14, 4.5, 180, 0, 180, amb, dif, spec, shine)); // 4th house
 
 	objectList.push(new HouseBottom(36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 5th house
 	objectList.push(new HouseTopWood(36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 5th house
@@ -182,6 +180,8 @@ window.onload = function init(){
 		objectList.push(new TreeTopTriangle(x, 3.5, z, 0.8, 0, 0, 0, amb, dif, spec, shine));
 		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
 	}
+
+	objectList.push(new EnvMapCube(-2, 1, 0, 2, -45, -45, 0, amb, dif, spec, shine));
 	
 	window.addEventListener("keydown", keyBoardFunction);
 	
@@ -196,24 +196,10 @@ function render(){
 		requestAnimationFrame(render);
     	gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-		let beforePos = camera1.vrp;
-		let beforeU = camera1.u;
-		let beforeV = camera1.v;
-		let beforeN = camera1.n;
-		camera1.vrp = vec3(0,-0.5,0);  
-		camera1.updateCameraMatrix();
-		env.draw();
-		gl.disable(gl.DEPTH_TEST);
-		skyCube.draw();
-		gl.enable(gl.DEPTH_TEST);
+		for (var i = 0; i<objectList.length; i++) {
+            objectList[i].draw();
+        }
 
-		camera1.vrp = beforePos;
-		camera1.u = beforeU;
-		camera1.v = beforeV;
-		camera1.n = beforeN;
-		camera1.updateCameraMatrix();
-        groundPlane.draw();
-		
 		// Slime split and merge animation while jumping
 		if (bgSlimeJumpCount != 10) {
 			slime.draw();
@@ -244,11 +230,6 @@ function render(){
 				bgSlimeJumpCount = 0;
 			}
 		}
-
-
-		for (var i = 0; i<objectList.length; i++) {
-            objectList[i].draw();
-        }
 
     }, 100 );  //10fps
 }

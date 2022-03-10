@@ -165,8 +165,9 @@ class GroundPlane extends Drawable {
     }
     
     draw() {
-        if((GroundPlane.texture == -1) || (GroundPlane.imageLoaded != 1))  //only draw when texture is loaded.
+        if((GroundPlane.texture == -1) || (GroundPlane.imageLoaded != 1)) { //only draw when texture is loaded.
         	return;
+        }
         
         gl.useProgram(GroundPlane.shaderProgram);
         

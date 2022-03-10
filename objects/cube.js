@@ -224,9 +224,10 @@ class Cube extends Drawable{
     }
     
     draw() {
-        if((Cube.texture == -1) || (Cube.imageLoaded != 6))  //only draw when texture is loaded.
+        if ((Cube.texture == -1) || (Cube.imageLoaded != 6)) {  //only draw when texture is loaded.
         	return;
-        
+        }
+
         gl.useProgram(Cube.shaderProgram);
         
         gl.bindBuffer( gl.ARRAY_BUFFER, Cube.positionBuffer);

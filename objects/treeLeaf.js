@@ -224,8 +224,9 @@ class TreeLeaf extends Drawable{
     }
     
     draw() {
-        if((TreeLeaf.texture == -1) || (TreeLeaf.imageLoaded != 6))  //only draw when texture is loaded.
+        if((TreeLeaf.texture == -1) || (TreeLeaf.imageLoaded != 6)) {  //only draw when texture is loaded.
         	return;
+        }
         
         gl.useProgram(TreeLeaf.shaderProgram);
         

@@ -224,8 +224,9 @@ class HouseBottom extends Drawable{
     }
     
     draw() {
-        if((HouseBottom.texture == -1) || (HouseBottom.imageLoaded != 6))  //only draw when texture is loaded.
+        if((HouseBottom.texture == -1) || (HouseBottom.imageLoaded != 6)) {  //only draw when texture is loaded.
         	return;
+        }
         
         gl.useProgram(HouseBottom.shaderProgram);
         
