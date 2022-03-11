@@ -166,10 +166,10 @@ class SkyCube extends Drawable{
        	gl.uniform1i(SkyCube.textureUnit,0);
         
         // Store current camera 
-        let beforePos = camera1.vrp;
-		let beforeU = camera1.u;
-		let beforeV = camera1.v;
-		let beforeN = camera1.n;
+        let beforePos = vec3(camera1.vrp);
+		let beforeU = vec3(camera1.u);
+		let beforeV = vec3(camera1.v);
+		let beforeN = vec3(camera1.n);
 
         // Move camera inside skycube
 		camera1.vrp = vec3(0,this.ty-0.5,0);  
