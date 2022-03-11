@@ -88,6 +88,7 @@ class Camera{
 }
 
 var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+//var camera1 = new Camera(vec3(-2,2,10),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 
 
 var light1 = new Light(vec3(0,0,0), vec3(0,-1,-1), vec4(0.1,0.1,0.1,1.0), vec4(0.4,0.4,0.4,1), vec4(0.3,0.3,0.3,1), 0, 0, 1); // directional light
@@ -157,7 +158,7 @@ window.onload = function init(){
 	objectList.push(new HouseBottom(-36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 	objectList.push(new HouseTopWood(-36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 
-	//objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); // path
+	objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); // path
 	//objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); 
 
 	objectList.push(new HouseBottom(-18, 4, -16, 8, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
@@ -181,7 +182,7 @@ window.onload = function init(){
 		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
 	}
 
-	objectList.push(new EnvMapCube(-2, 1, 0, 2, -45, -45, 0, amb, dif, spec, shine));
+	objectList.push(new EnvMapCube(-2, 2, 0, 4, 0, 0, 0, amb, dif, spec, shine));
 	
 	window.addEventListener("keydown", keyBoardFunction);
 	

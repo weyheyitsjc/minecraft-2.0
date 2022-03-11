@@ -183,7 +183,10 @@ class EnvMapCube extends Drawable{
         gl.enableVertexAttribArray(EnvMapCube.aNormalShader);    
     	gl.drawElements(gl.TRIANGLES, EnvMapCube.indices.length, gl.UNSIGNED_INT, 0);
     	gl.disableVertexAttribArray(EnvMapCube.aPositionShader);    
-        gl.disableVertexAttribArray(EnvMapCube.aNormalShader);    
+        gl.disableVertexAttribArray(EnvMapCube.aNormalShader);   
+        
+        // Reset imageloaded to load the next instance
+        EnvMapCube.imageLoaded = 0;
 
     }
 
@@ -216,9 +219,9 @@ class EnvMapCube extends Drawable{
                     break;
                 
                 case 1: //z
-                    camera1.u = vec3(1,0,0);
-                    camera1.v = vec3(0,1,0);
-                    camera1.n = vec3(0,0,-1);
+                    camera1.u = vec3(-1,0,0);
+                    camera1.v = vec3(0,-1,0);
+                    camera1.n = vec3(0,0,1);
                     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_POSITIVE_Z, EnvMapCube.texture, 0);
                     break;
 
@@ -260,12 +263,12 @@ class EnvMapCube extends Drawable{
                 }
             }
 
-            // if (bgSlimeJumpCount != 10) {
-            //     slime.draw();
-            // } else {
-            //     slime1.draw();
-            //     slime2.draw();
-            // }
+            if (bgSlimeJumpCount != 10) {
+                slime.draw();
+            } else {
+                slime1.draw();
+                slime2.draw();
+            }
 
             EnvMapCube.imageLoaded ++;
         }
