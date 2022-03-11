@@ -263,12 +263,12 @@ class EnvMapCube extends Drawable{
                 }
             }
 
-            // if (bgSlimeJumpCount != 10) {
-            //     slime.draw();
-            // } else {
-            //     slime1.draw();
-            //     slime2.draw();
-            // }
+            if (bgSlimeJumpCount != 10) {
+                slime.draw();
+            } else {
+                slime1.draw();
+                slime2.draw();
+            }
 
             EnvMapCube.imageLoaded ++;
         }
