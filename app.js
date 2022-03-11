@@ -87,7 +87,8 @@ class Camera{
 	}
 }
 
-var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+//var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+var camera1 = new Camera(vec3(-2,2,10),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 
 
 var light1 = new Light(vec3(0,0,0), vec3(0,-1,-1), vec4(0.1,0.1,0.1,1.0), vec4(0.4,0.4,0.4,1), vec4(0.3,0.3,0.3,1), 0, 0, 1); // directional light
@@ -149,39 +150,39 @@ window.onload = function init(){
 	slime1 = new Slime(-0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
 	slime2 = new Slime(0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
 
-	objectList.push(new HouseBottom(0, 4, -8, 8, 0, 0, 0, amb, dif, spec, shine)); // main house
-	objectList.push(new HouseTopBrick(0, 8, -8, 4.5, 0, 0, 0, amb, dif, spec, shine)); // main house
+	//objectList.push(new HouseBottom(0, 4, -8, 8, 0, 0, 0, amb, dif, spec, shine)); // main house
+	//objectList.push(new HouseTopBrick(0, 8, -8, 4.5, 0, 0, 0, amb, dif, spec, shine)); // main house
 
-	makeTree(3, 5);
+	// makeTree(3, 5);
 
-	objectList.push(new HouseBottom(-36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
-	objectList.push(new HouseTopWood(-36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
+	// objectList.push(new HouseBottom(-36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
+	// objectList.push(new HouseTopWood(-36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 
-	objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); // path
-	//objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); 
+	// objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); // path
+	// //objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); 
 
-	objectList.push(new HouseBottom(-18, 4, -16, 8, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
-	objectList.push(new HouseTopBrick(-18, 8, -16, 4.5, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
+	// objectList.push(new HouseBottom(-18, 4, -16, 8, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
+	// objectList.push(new HouseTopBrick(-18, 8, -16, 4.5, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
 
-	objectList.push(new HouseBottom(0, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
-	objectList.push(new HouseTopWood(0, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
+	// objectList.push(new HouseBottom(0, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
+	// objectList.push(new HouseTopWood(0, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
 
-	objectList.push(new HouseBottom(18, 4, -14, 8, 180, 0, 180, amb, dif, spec, shine)); // 4th house
-	objectList.push(new HouseTopBrick(18, 8, -14, 4.5, 180, 0, 180, amb, dif, spec, shine)); // 4th house
+	// objectList.push(new HouseBottom(18, 4, -14, 8, 180, 0, 180, amb, dif, spec, shine)); // 4th house
+	// objectList.push(new HouseTopBrick(18, 8, -14, 4.5, 180, 0, 180, amb, dif, spec, shine)); // 4th house
 
-	objectList.push(new HouseBottom(36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 5th house
-	objectList.push(new HouseTopWood(36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 5th house
+	// objectList.push(new HouseBottom(36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 5th house
+	// objectList.push(new HouseTopWood(36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 5th house
 
-	for (let i = 0; i < 100; i++) {
-		var x = Math.floor(Math.random() * (Math.floor(36) - Math.ceil(-36) + 1) + Math.ceil(-36));
-		var z = Math.floor(Math.random() * (Math.floor(-42) - Math.ceil(-48) + 1) + Math.ceil(-48));
-		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
-		objectList.push(new TreeTopTriangle(x, 1.5, z, 1, 0, 0, 0, amb, dif, spec, shine));
-		objectList.push(new TreeTopTriangle(x, 3.5, z, 0.8, 0, 0, 0, amb, dif, spec, shine));
-		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
-	}
+	// for (let i = 0; i < 100; i++) {
+	// 	var x = Math.floor(Math.random() * (Math.floor(36) - Math.ceil(-36) + 1) + Math.ceil(-36));
+	// 	var z = Math.floor(Math.random() * (Math.floor(-42) - Math.ceil(-48) + 1) + Math.ceil(-48));
+	// 	objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
+	// 	objectList.push(new TreeTopTriangle(x, 1.5, z, 1, 0, 0, 0, amb, dif, spec, shine));
+	// 	objectList.push(new TreeTopTriangle(x, 3.5, z, 0.8, 0, 0, 0, amb, dif, spec, shine));
+	// 	objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
+	// }
 
-	objectList.push(new EnvMapCube(-2, 1, 0, 2, -45, -45, 0, amb, dif, spec, shine));
+	objectList.push(new EnvMapCube(-2, 2, 0, 4, 0, 0, 0, amb, dif, spec, shine));
 	
 	window.addEventListener("keydown", keyBoardFunction);
 	
@@ -201,35 +202,35 @@ function render(){
         }
 
 		// Slime split and merge animation while jumping
-		if (bgSlimeJumpCount != 10) {
-			slime.draw();
-			slime.ty += 0.2;
-			slime.updateModelMatrix();
-			bgSlimeJumpCount++;
+		// if (bgSlimeJumpCount != 10) {
+		// 	slime.draw();
+		// 	slime.ty += 0.2;
+		// 	slime.updateModelMatrix();
+		// 	bgSlimeJumpCount++;
 
-			if (bgSlimeJumpCount == 9) {
-				slime1.ty = 2.3;
-				slime2.ty = 2.3;
-				slime1.updateModelMatrix();
-				slime2.updateModelMatrix();
-				smSlimeJumpCount = 10;
+		// 	if (bgSlimeJumpCount == 9) {
+		// 		slime1.ty = 2.3;
+		// 		slime2.ty = 2.3;
+		// 		slime1.updateModelMatrix();
+		// 		slime2.updateModelMatrix();
+		// 		smSlimeJumpCount = 10;
 
-			}
-		} else if(smSlimeJumpCount != 0) {
-			slime1.draw();
-			slime2.draw();
-			slime1.ty -= 0.2;
-			slime2.ty -= 0.2;
-			slime1.updateModelMatrix();
-			slime2.updateModelMatrix();
-			smSlimeJumpCount--;
+		// 	}
+		// } else if(smSlimeJumpCount != 0) {
+		// 	slime1.draw();
+		// 	slime2.draw();
+		// 	slime1.ty -= 0.2;
+		// 	slime2.ty -= 0.2;
+		// 	slime1.updateModelMatrix();
+		// 	slime2.updateModelMatrix();
+		// 	smSlimeJumpCount--;
 
-			if (smSlimeJumpCount == 1) {
-				slime.ty = 1;
-				slime.updateModelMatrix();
-				bgSlimeJumpCount = 0;
-			}
-		}
+		// 	if (smSlimeJumpCount == 1) {
+		// 		slime.ty = 1;
+		// 		slime.updateModelMatrix();
+		// 		bgSlimeJumpCount = 0;
+		// 	}
+		// }
 
     }, 100 );  //10fps
 }
