@@ -301,7 +301,7 @@ var bgSlimeJumpCount = 0;
 var smSlimeJumpCount = 10;
 
 function render(){
-    setTimeout(function(){
+    setTimeout(function() {
 		requestAnimationFrame(render);
     	gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -309,6 +309,7 @@ function render(){
             objectList[i].draw();
         }
 
+		// Cloud moving and randomly generating animation
 		for (var i = 0; i<cloudList.length; i++) {
 			var x = cloudList[i].tx - 1;
 			if (x < -48) {
