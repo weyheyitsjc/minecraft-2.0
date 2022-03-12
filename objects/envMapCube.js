@@ -262,7 +262,7 @@ class EnvMapCube extends Drawable{
                     objectList[i].draw();
                 }
             }
-
+            
             if (bgSlimeJumpCount != 10) {
                 for (let i = 0; i < bigSlime.length; i++) {
                    bigSlime[i].draw(); 
@@ -271,6 +271,10 @@ class EnvMapCube extends Drawable{
                 for (let i = 0; i < smallSlime.length; i++) {
                     smallSlime[i].draw();
                 }
+            }
+
+            for (var i = 0; i<cloudList.length; i++) {
+                cloudList[i].draw();
             }
 
             EnvMapCube.imageLoaded ++;

@@ -274,23 +274,23 @@ window.onload = function init(){
 	makeTree(-15, -20);
 	makeTree(-28, 0);
 
-	// for (let i = 0; i < 100; i++) {
-	// 	var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
-	// 	var z = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(-30) + 1) + Math.ceil(-30));
-	// 	var temp = [];
-	// 	var xz = vec2(x, z);
+	for (let i = 0; i < 100; i++) {
+		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
+		var z = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(-30) + 1) + Math.ceil(-30));
+		var temp = [];
+		var xz = vec2(x, z);
 
-	// 	if (!temp.includes(xz)) {
-	// 		temp.push(xz);
-	// 		cloudList.push(new Cloud(x, 25, z, 4, 0, 0, 0, amb, dif, spec, shine));
-	// 	} else {
-	// 		i-=1;
-	// 	}
-	// }
+		if (!temp.includes(xz)) {
+			temp.push(xz);
+			cloudList.push(new Cloud(x, 25, z, 4, 0, 0, 0, amb, dif, spec, shine));
+		} else {
+			i-=1;
+		}
+	}
 
 	
 
-	objectList.push(new EnvMapCube(0, 4, 0, 4, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new EnvMapCube(0, 5, 0, 4, 0, 0, 0, amb, dif, spec, shine));
 	
 	window.addEventListener("keydown", keyBoardFunction);
 	
@@ -307,19 +307,6 @@ function render(){
 
 		for (var i = 0; i<objectList.length; i++) {
             objectList[i].draw();
-        }
-
-		// Cloud moving and randomly generating animation
-		for (var i = 0; i<cloudList.length; i++) {
-			var x = cloudList[i].tx - 1;
-			if (x < -48) {
-				cloudList[i].tx = 48;
-				cloudList[i].tz = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-30) + 1) + Math.ceil(-48));
-			} else {
-				cloudList[i].tx = x;
-			}
-			cloudList[i].updateModelMatrix();
-			cloudList[i].draw();   
         }
 
 		// Slime split and merge animation while jumping
@@ -354,6 +341,19 @@ function render(){
 				bgSlimeJumpCount = 0;
 			}
 		}
+
+		// Cloud moving and randomly generating animation
+		for (var i = 0; i<cloudList.length; i++) {
+			var x = cloudList[i].tx - 1;
+			if (x < -48) {
+				cloudList[i].tx = 48;
+				cloudList[i].tz = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-30) + 1) + Math.ceil(-48));
+			} else {
+				cloudList[i].tx = x;
+			}
+			cloudList[i].updateModelMatrix();
+			cloudList[i].draw();   
+        }
 
     }, 100 );  //10fps
 }
