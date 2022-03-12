@@ -1,9 +1,22 @@
 class Path extends Drawable {
-    static vertexPositions = [];
+    static vertexPositions = [
+        vec3(-0.5, 0.0, 0.5), // front Left
+		vec3( 0.5, 0.0, 0.5), // front right
+		vec3( 0.5, 0.0,-0.5), // back right
+        vec3(-0.5, 0.0,-0.5) // back Left
+    ];
   
-    static vertexTextureCoords = [];
+    static vertexTextureCoords = [
+        vec2(1,0),
+        vec2(1,1),
+        vec2(0,1),
+        vec2(0,0)
+    ];
     
-    static indices = [];
+    static indices = [
+        0, 1, 2,
+        0, 2, 3
+    ];
 
     static vertexNormals = [];
 
@@ -156,7 +169,6 @@ class Path extends Drawable {
     
     constructor(tx,ty,tz,scale,rotX,rotY,rotZ,amb,dif,sp,sh){
         super(tx,ty,tz,scale,rotX,rotY,rotZ,amb,dif,sp,sh);
-        this.setUp();
         if(Path.shaderProgram == -1){
             Path.initialize()
             Path.initializeTexture();
@@ -219,58 +231,6 @@ class Path extends Drawable {
     	gl.disableVertexAttribArray(Path.aPositionShader);    
     	gl.disableVertexAttribArray(Path.aTextureCoordShader);    
         gl.disableVertexAttribArray(Path.aNormalShader);    
-    }
-
-    setUp(){
-        let v0 = vec3(-0.5, 0.0, 0.5); // front Left
-		let v1 = vec3( 0.5, 0.0, 0.5); // front right
-		let v2 = vec3( 0.5, 0.0,-0.5); // back right
-        let v3 = vec3(-0.5, 0.0,-0.5); // back Left
-
-        this.divideQuad(v0, v1, v2, v3, 1);
-    }
-
-    divideQuad(a, b, c, d, depth) {
-        if (depth > 0) {
-            var v1 = mult(0.5,add(a,b));
-            v1[3] = 1.0;
-            var v2 = mult(0.5,add(b,c));
-            v2[3] = 1.0;
-            var v3 = mult(0.5,add(c,d));
-            v3[3] = 1.0;
-            var v4 = mult(0.5,add(d,a));
-            v4[3] = 1.0;
-            var v5 = mult(0.5,add(a,c));
-            v5[3] = 1.0;
-            this.divideQuad(a, v1, v5,v4, depth - 1);
-            this.divideQuad(v1, b, v2,v5, depth - 1);
-            this.divideQuad(v2, c, v3,v5, depth - 1);
-            this.divideQuad(v3, d, v4,v5, depth - 1);
-        } else {
-            
-            // Allow duplicate to due to copying and pasting texture patches instead of fitting a texture into the plane
-            Path.vertexPositions.push(a);
-            Path.vertexPositions.push(b);
-            Path.vertexPositions.push(c);
-            Path.vertexPositions.push(d);
-            
-            Path.vertexTextureCoords.push(vec2(0,0));
-            Path.vertexTextureCoords.push(vec2(1,0));
-            Path.vertexTextureCoords.push(vec2(1,1));
-            Path.vertexTextureCoords.push(vec2(0,1));
-
-            //Triangle #1
-            Path.indices.push(Path.vertexPositions.lastIndexOf(a));
-            Path.indices.push(Path.vertexPositions.lastIndexOf(b));
-            Path.indices.push(Path.vertexPositions.lastIndexOf(c));
-        
-
-            //Triangle #2
-            Path.indices.push(Path.vertexPositions.lastIndexOf(c));
-            Path.indices.push(Path.vertexPositions.lastIndexOf(d));
-            Path.indices.push(Path.vertexPositions.lastIndexOf(a));
-
-        }
     }
 }
 

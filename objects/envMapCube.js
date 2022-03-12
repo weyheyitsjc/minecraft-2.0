@@ -212,44 +212,44 @@ class EnvMapCube extends Drawable{
             gl.bindTexture(gl.TEXTURE_CUBE_MAP, EnvMapCube.texture);
             switch(j) {
                 case 0: //-z
-                    camera1.u = vec3(1,0,0);
-                    camera1.v = vec3(0,1,0);
+                    camera1.u = vec3(-1,0,0);
+                    camera1.v = vec3(0,-1,0);
                     camera1.n = vec3(0,0,1);
                     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, EnvMapCube.texture, 0);
                     break;
                 
                 case 1: //z
-                    camera1.u = vec3(-1,0,0);
+                    camera1.u = vec3(1,0,0);
                     camera1.v = vec3(0,-1,0);
-                    camera1.n = vec3(0,0,1);
+                    camera1.n = vec3(0,0,-1);
                     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_POSITIVE_Z, EnvMapCube.texture, 0);
                     break;
 
                 case 2: //-x
-                    camera1.u = vec3(0,0,-1);
-                    camera1.v = vec3(0,1,0);
-                    camera1.n = vec3(-1,0,0);
+                    camera1.u = vec3(0,0,1);
+                    camera1.v = vec3(0,-1,0);
+                    camera1.n = vec3(1,0,0);
                     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_NEGATIVE_X, EnvMapCube.texture, 0);
                     break;
 
                 case 3: //x
-                    camera1.u = vec3(0,0,1);
-                    camera1.v = vec3(0,1,0);
-                    camera1.n = vec3(1,0,0);
+                    camera1.u = vec3(0,0,-1);
+                    camera1.v = vec3(0,-1,0);
+                    camera1.n = vec3(-1,0,0);
                     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_POSITIVE_X, EnvMapCube.texture, 0);
                     break;
 
                 case 4: //-y
-                    camera1.u = vec3(1,0,0);
-                    camera1.v = vec3(0,0,-1);
-                    camera1.n = vec3(0,1,0);
+                    camera1.u = vec3(-1,0,0);
+                    camera1.v = vec3(0,0,1);
+                    camera1.n = vec3(0,-1,0);   
                     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, EnvMapCube.texture, 0);
                     break;
 
                 case 5: //y
-                    camera1.u = vec3(1,0,0);
+                    camera1.u = vec3(-1,0,0);
                     camera1.v = vec3(0,0,1);
-                    camera1.n = vec3(0,-1,0);
+                    camera1.n = vec3(0,1,0);
                     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_CUBE_MAP_POSITIVE_Y, EnvMapCube.texture, 0);
                     break;
             }
@@ -262,12 +262,19 @@ class EnvMapCube extends Drawable{
                     objectList[i].draw();
                 }
             }
-
+            
             if (bgSlimeJumpCount != 10) {
-                slime.draw();
+                for (let i = 0; i < bigSlime.length; i++) {
+                   bigSlime[i].draw(); 
+                }    
             } else {
-                slime1.draw();
-                slime2.draw();
+                for (let i = 0; i < smallSlime.length; i++) {
+                    smallSlime[i].draw();
+                }
+            }
+
+            for (var i = 0; i<cloudList.length; i++) {
+                cloudList[i].draw();
             }
 
             EnvMapCube.imageLoaded ++;

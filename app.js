@@ -26,7 +26,7 @@ class Camera{
     	this.v = normalize(v);
     	this.n = normalize(n);
     	
-    	this.projectionMatrix = perspective(90.0, 1.0, 0.1, 100);
+    	this.projectionMatrix = perspective(90.0, 1.0, 0.1, 130);
     	
     	this.updateCameraMatrix();
     }
@@ -87,8 +87,17 @@ class Camera{
 	}
 }
 
-var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
-//var camera1 = new Camera(vec3(-2,2,10),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+// var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+// var camera1 = new Camera(vec3(0,35,20),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+// camera1.setRotationX(-60);
+
+// var camera1 = new Camera(vec3(0,30,0),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+// camera1.setRotationX(-90);
+var mainCam = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+var rotatingCam = new Camera(vec3(0,30,0),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+
+var camera1 = mainCam;
+
 
 
 var light1 = new Light(vec3(0,0,0), vec3(0,-1,-1), vec4(0.1,0.1,0.1,1.0), vec4(0.4,0.4,0.4,1), vec4(0.3,0.3,0.3,1), 0, 0, 1); // directional light
@@ -125,14 +134,15 @@ class Drawable{
     }
 }
 
-var slime;
-var slime1,slime2;
 var objectList = [];
-var envCube;
+var cloudList = [];
+var bigSlime = [];
+var smallSlime = [];
 var amb = vec4(0.7,0.7,0.7,1.0);
 var dif = vec4(0.9,0.9,0.9,1.0);
 var spec = vec4(1.0,1.0,1.0,1.0);
 var shine = 100.0;
+var mainCamOn = true;
 
 window.onload = function init(){
     canvas = document.getElementById( "gl-canvas" );
@@ -145,44 +155,146 @@ window.onload = function init(){
 
 	objectList.push(new SkyCube(0, 0, 0, 2, 0, 0, 0, amb, dif, spec, shine));
     objectList.push(new GroundPlane(0, 0, 0, 100, 0, 0, 0, amb, dif, spec, shine));
+
+	makeSlime(-10, -10);
+	makeSlime(10, 10, 180);
+	makeSlime(12, -9);
+	makeSlime(17, -5);
+	makeSlime(-23, 5, 90);
+
+	for (let i = -3; i <=3; i++) {
+		objectList.push(new Path(-3.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // left path
+		objectList.push(new Path(-4, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // left path
+
+		objectList.push(new Path(i, 0.005, -3.5, 1, 0, 0, 0, amb, dif, spec, shine)); // top path
+		objectList.push(new Path(i, 0.005, -4, 1, 0, 0, 0, amb, dif, spec, shine)); // top path
+	}
 	
-	slime = new Slime(0, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine);
-	slime1 = new Slime(-0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
-	slime2 = new Slime(0.75, 2.5, 0, 1, 0, 0, 0, amb, dif, spec, shine);
+	for (let i = -3; i <=3; i++) {
+		objectList.push(new Path(3.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // right path
+		objectList.push(new Path(4, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // right path
 
-	objectList.push(new HouseBottom(0, 4, -8, 8, 0, 0, 0, amb, dif, spec, shine)); // main house
-	objectList.push(new HouseTopBrick(0, 8, -8, 4.5, 0, 0, 0, amb, dif, spec, shine)); // main house
+		objectList.push(new Path(i, 0.005, 3.5, 1, 0, 0, 0, amb, dif, spec, shine)); // bottom path
+		objectList.push(new Path(i, 0.005, 4, 1, 0, 0, 0, amb, dif, spec, shine)); // bottom path
+	}
 
-	makeTree(3, 5);
+	objectList.push(new HouseBottom(0, 4, -20, 8, 0, 0, 0, amb, dif, spec, shine)); // main house
+	objectList.push(new HouseTopBrick(0, 8, -20, 4.5, 0, 0, 0, amb, dif, spec, shine)); // main house
 
-	objectList.push(new HouseBottom(-36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
-	objectList.push(new HouseTopWood(-36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
+	for (let i = -5; i >= -17; i--) {
+		objectList.push(new Path(-0.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // path to main house
+		objectList.push(new Path(0.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); 
+	}
+	
+	objectList.push(new HouseBottom(-25, 4, -15, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
+	objectList.push(new HouseTopWood(-25, 8, -15, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 
-	objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); // path
-	//objectList.push(new Path(-44, 0.1, -24, 1, 0, 0, 0, amb, dif, spec, shine)); 
+	for (let i = -5; i >= -25; i--) {
+		objectList.push(new Path(i, 0.005, -0.5, 1, 0, 0, 0, amb, dif, spec, shine)); // path to 1st house
+		objectList.push(new Path(i, 0.005, 0.5, 1, 0, 0, 0, amb, dif, spec, shine)); 
+	}
 
-	objectList.push(new HouseBottom(-18, 4, -16, 8, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
-	objectList.push(new HouseTopBrick(-18, 8, -16, 4.5, 180, 0, 180, amb, dif, spec, shine)); // 2nd house
+	for (let i = -1; i >= -11; i--) {
+		objectList.push(new Path(-25.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // path to 1st house
+		objectList.push(new Path(-24.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); 
+	}
 
-	objectList.push(new HouseBottom(0, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
-	objectList.push(new HouseTopWood(0, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
+	objectList.push(new HouseBottom(25, 4, -13, 8, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
+	objectList.push(new HouseTopBrick(25, 8, -13, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
 
-	objectList.push(new HouseBottom(18, 4, -14, 8, 180, 0, 180, amb, dif, spec, shine)); // 4th house
-	objectList.push(new HouseTopBrick(18, 8, -14, 4.5, 180, 0, 180, amb, dif, spec, shine)); // 4th house
+	
+	for (let i = 5; i <= 25; i++) {
+		objectList.push(new Path(i, 0.005, -0.5, 1, 0, 0, 0, amb, dif, spec, shine)); // path to 1st house
+		objectList.push(new Path(i, 0.005, 0.5, 1, 0, 0, 0, amb, dif, spec, shine)); 
+	}
 
-	objectList.push(new HouseBottom(36, 4, -32, 8, 0, 0, 0, amb, dif, spec, shine)); // 5th house
-	objectList.push(new HouseTopWood(36, 8, -32, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 5th house
+	for (let i = -1; i >= -9; i--) {
+		objectList.push(new Path(25.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // path to 1st house
+		objectList.push(new Path(24.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); 
+	}
 
-	for (let i = 0; i < 100; i++) {
-		var x = Math.floor(Math.random() * (Math.floor(36) - Math.ceil(-36) + 1) + Math.ceil(-36));
-		var z = Math.floor(Math.random() * (Math.floor(-42) - Math.ceil(-48) + 1) + Math.ceil(-48));
+	objectList.push(new HouseBottom(0, 4, 23, 8, 0, 180, 0, amb, dif, spec, shine)); // 3rd house
+	objectList.push(new HouseTopWood(0, 8, 23, 4.5, 0, 180, 0, amb, dif, spec, shine)); // 3rd house
+
+	for (let i = 5; i <= 20; i++) {
+		objectList.push(new Path(-0.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // path to main house
+		objectList.push(new Path(0.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); 
+	}
+
+	objectList.push(new HouseBottom(17, 4, 14, 8, 0, 180, 0, amb, dif, spec, shine)); // 4th house
+	objectList.push(new HouseTopBrick(17, 8, 14, 4.5, 0, 180, 0, amb, dif, spec, shine)); // 4th house
+
+	for (let i = 1; i <= 10; i++) {
+		objectList.push(new Path(17.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // path to 5th house
+		objectList.push(new Path(16.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); 
+	}
+
+	objectList.push(new HouseBottom(-17, 4, 13, 8, 0, 180, 0, amb, dif, spec, shine)); // 5th house
+	objectList.push(new HouseTopWood(-17, 8, 13, 4.5, 0, 180, 0, amb, dif, spec, shine)); // 5th house
+
+	for (let i = 1; i <= 9; i++) {
+		objectList.push(new Path(-17.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // path to 5th house
+		objectList.push(new Path(-16.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); 
+	}
+
+	for (let i = 0; i < 50; i++) { // top trees
+		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
+		var z = Math.floor(Math.random() * (Math.floor(-30) - Math.ceil(-48) + 1) + Math.ceil(-48));
 		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
 		objectList.push(new TreeTopTriangle(x, 1.5, z, 1, 0, 0, 0, amb, dif, spec, shine));
 		objectList.push(new TreeTopTriangle(x, 3.5, z, 0.8, 0, 0, 0, amb, dif, spec, shine));
 		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
 	}
 
-	objectList.push(new EnvMapCube(-2, 2, 0, 4, 0, 0, 0, amb, dif, spec, shine));
+	for (let i = 0; i < 50; i++) { // left trees
+		var x = Math.floor(Math.random() * (Math.floor(-35) - Math.ceil(-48) + 1) + Math.ceil(-48));
+		var z = Math.floor(Math.random() * (Math.floor(31) - Math.ceil(-28) + 1) + Math.ceil(-28));
+
+		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 1.5, z, 1, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 3.5, z, 0.8, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
+	}
+
+	for (let i = 0; i < 50; i++) { // bottom trees
+		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
+		var z = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(33) + 1) + Math.ceil(33));
+		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 1.5, z, 1, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 3.5, z, 0.8, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
+	}
+
+	for (let i = 0; i < 50; i++) { // right trees
+		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(35) + 1) + Math.ceil(35));
+		var z = Math.floor(Math.random() * (Math.floor(31) - Math.ceil(-28) + 1) + Math.ceil(-28));
+		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 1.5, z, 1, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 3.5, z, 0.8, 0, 0, 0, amb, dif, spec, shine));
+		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
+	}
+
+	makeTree(13, -13);
+	makeTree(5, 13);
+	makeTree(-7, 10);
+	makeTree(-15, -20);
+	makeTree(-28, 0);
+
+	// for (let i = 0; i < 100; i++) {
+	// 	var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
+	// 	var z = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(-30) + 1) + Math.ceil(-30));
+	// 	var temp = [];
+	// 	var xz = vec2(x, z);
+
+	// 	if (!temp.includes(xz)) {
+	// 		temp.push(xz);
+	// 		cloudList.push(new Cloud(x, 25, z, 4, 0, 0, 0, amb, dif, spec, shine));
+	// 	} else {
+	// 		i-=1;
+	// 	}
+	// }
+
+	objectList.push(new EnvMapCube(0, 5, 0, 4, 0, 0, 0, amb, dif, spec, shine));
 	
 	window.addEventListener("keydown", keyBoardFunction);
 	
@@ -193,7 +305,7 @@ var bgSlimeJumpCount = 0;
 var smSlimeJumpCount = 10;
 
 function render(){
-    setTimeout(function(){
+    setTimeout(function() {
 		requestAnimationFrame(render);
     	gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -203,34 +315,49 @@ function render(){
 
 		// Slime split and merge animation while jumping
 		if (bgSlimeJumpCount != 10) {
-			slime.draw();
-			slime.ty += 0.2;
-			slime.updateModelMatrix();
+			for (let i = 0; i < bigSlime.length; i++) {
+				bigSlime[i].draw();
+				bigSlime[i].ty += 0.2;
+				bigSlime[i].updateModelMatrix();
+			}
 			bgSlimeJumpCount++;
 
 			if (bgSlimeJumpCount == 9) {
-				slime1.ty = 2.3;
-				slime2.ty = 2.3;
-				slime1.updateModelMatrix();
-				slime2.updateModelMatrix();
+				for (let i = 0; i < smallSlime.length; i++) {
+					smallSlime[i].ty = 2.3;
+					smallSlime[i].updateModelMatrix();
+				}
 				smSlimeJumpCount = 10;
-
 			}
 		} else if(smSlimeJumpCount != 0) {
-			slime1.draw();
-			slime2.draw();
-			slime1.ty -= 0.2;
-			slime2.ty -= 0.2;
-			slime1.updateModelMatrix();
-			slime2.updateModelMatrix();
+			for (let i = 0; i < smallSlime.length; i++) {
+				smallSlime[i].draw();
+				smallSlime[i].ty -= 0.2;
+				smallSlime[i].updateModelMatrix();
+			}
 			smSlimeJumpCount--;
 
 			if (smSlimeJumpCount == 1) {
-				slime.ty = 1;
-				slime.updateModelMatrix();
+				for (let i = 0; i < bigSlime.length; i++) {
+					bigSlime[i].ty = 1;
+					bigSlime[i].updateModelMatrix();
+				}	
 				bgSlimeJumpCount = 0;
 			}
 		}
+
+		// Cloud moving and randomly generating animation
+		for (var i = 0; i<cloudList.length; i++) {
+			var x = cloudList[i].tx - 1;
+			if (x < -48) {
+				cloudList[i].tx = 48;
+				cloudList[i].tz = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-30) + 1) + Math.ceil(-48));
+			} else {
+				cloudList[i].tx = x;
+			}
+			cloudList[i].updateModelMatrix();
+			cloudList[i].draw();   
+        }
 
     }, 100 );  //10fps
 }
@@ -246,37 +373,53 @@ function keyBoardFunction(event) {
 				light2.turnOff();
 			}
 			break;
-		case "ArrowUp":
-			camera1.vrp = subtract(camera1.vrp, mult(stepRatio, camera1.n));
-			break;
-		case "ArrowDown": 
-			camera1.vrp = add(camera1.vrp, mult(stepRatio, camera1.n));
-			break;
-		case "ArrowLeft": 
-			camera1.vrp = subtract(camera1.vrp, mult(stepRatio, camera1.u));
-			break;
-		case "ArrowRight":
-			camera1.vrp = add(camera1.vrp, mult(stepRatio, camera1.u));
-			break;
-		case "Z":
-			camera1.setRotationZ(-angleStep);
-			break;
-		case "z":
-			camera1.setRotationZ(angleStep);
-			break;
-		case "X":
-			camera1.setRotationX(angleStep);
-			break;
-		case "x":
-			camera1.setRotationX(-angleStep);
-			break;
-		case "C":
-			camera1.setRotationY(-angleStep)
-			break;
-		case "c":
-			camera1.setRotationY(angleStep);
+		case "s":
+			// if main camera is on swap to rotating camera
+			if (mainCamOn) {
+				camera1 = rotatingCam;
+			} else {
+				camera1 = mainCam;
+			}
+			mainCamOn = !mainCamOn
 			break;
 	}
+
+	// Main camera movement control
+	if (mainCamOn) {
+		switch (event.key) {
+			case "ArrowUp":
+				camera1.vrp = subtract(camera1.vrp, mult(stepRatio, camera1.n));
+				break;
+			case "ArrowDown": 
+				camera1.vrp = add(camera1.vrp, mult(stepRatio, camera1.n));
+				break;
+			case "ArrowLeft": 
+				camera1.vrp = subtract(camera1.vrp, mult(stepRatio, camera1.u));
+				break;
+			case "ArrowRight":
+				camera1.vrp = add(camera1.vrp, mult(stepRatio, camera1.u));
+				break;
+			case "Z":
+				camera1.setRotationZ(-angleStep);
+				break;
+			case "z":
+				camera1.setRotationZ(angleStep);
+				break;
+			case "X":
+				camera1.setRotationX(angleStep);
+				break;
+			case "x":
+				camera1.setRotationX(-angleStep);
+				break;
+			case "C":
+				camera1.setRotationY(-angleStep)
+				break;
+			case "c":
+				camera1.setRotationY(angleStep);
+				break;
+		}
+	}
+
 	camera1.updateCameraMatrix();
 	light2.loc = camera1.vrp;
 	light2.direction = mult(-1,camera1.n);
@@ -314,4 +457,10 @@ function makeTree(x, z) {
 	objectList.push(new TreeLeaf(x+0.75, 6.25, z+0.75, 2.5, 0, 0, 0, amb, dif, spec, shine));
 
 	objectList.push(new TreeLeaf(x, 8.25, z, 2, 0, 0, 0, amb, dif, spec, shine));
+}
+
+function makeSlime(x, z, rotateY = 0) {
+	bigSlime.push(new Slime(x, 1, z, 2, 0, rotateY, 0, amb, dif, spec, shine));
+	smallSlime.push(new Slime(x-0.75, 2.5, z, 1, 0, rotateY, 0, amb, dif, spec, shine));
+	smallSlime.push(new Slime(x+0.75, 2.5, z, 1, 0, rotateY, 0, amb, dif, spec, shine));
 }
