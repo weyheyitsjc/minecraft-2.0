@@ -264,10 +264,13 @@ class EnvMapCube extends Drawable{
             }
 
             if (bgSlimeJumpCount != 10) {
-                slime.draw();
+                for (let i = 0; i < bigSlime.length; i++) {
+                   bigSlime[i].draw(); 
+                }    
             } else {
-                slime1.draw();
-                slime2.draw();
+                for (let i = 0; i < smallSlime.length; i++) {
+                    smallSlime[i].draw();
+                }
             }
 
             EnvMapCube.imageLoaded ++;
