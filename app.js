@@ -93,8 +93,10 @@ class Camera{
 
 // var camera1 = new Camera(vec3(0,30,0),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 // camera1.setRotationX(-90);
+var mainCam = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+var rotatingCam = new Camera(vec3(0,30,0),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 
-var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+var camera1 = mainCam;
 
 
 
@@ -140,6 +142,7 @@ var amb = vec4(0.7,0.7,0.7,1.0);
 var dif = vec4(0.9,0.9,0.9,1.0);
 var spec = vec4(1.0,1.0,1.0,1.0);
 var shine = 100.0;
+var mainCamOn = true;
 
 window.onload = function init(){
     canvas = document.getElementById( "gl-canvas" );
@@ -370,37 +373,53 @@ function keyBoardFunction(event) {
 				light2.turnOff();
 			}
 			break;
-		case "ArrowUp":
-			camera1.vrp = subtract(camera1.vrp, mult(stepRatio, camera1.n));
-			break;
-		case "ArrowDown": 
-			camera1.vrp = add(camera1.vrp, mult(stepRatio, camera1.n));
-			break;
-		case "ArrowLeft": 
-			camera1.vrp = subtract(camera1.vrp, mult(stepRatio, camera1.u));
-			break;
-		case "ArrowRight":
-			camera1.vrp = add(camera1.vrp, mult(stepRatio, camera1.u));
-			break;
-		case "Z":
-			camera1.setRotationZ(-angleStep);
-			break;
-		case "z":
-			camera1.setRotationZ(angleStep);
-			break;
-		case "X":
-			camera1.setRotationX(angleStep);
-			break;
-		case "x":
-			camera1.setRotationX(-angleStep);
-			break;
-		case "C":
-			camera1.setRotationY(-angleStep)
-			break;
-		case "c":
-			camera1.setRotationY(angleStep);
+		case "s":
+			// if main camera is on swap to rotating camera
+			if (mainCamOn) {
+				camera1 = rotatingCam;
+			} else {
+				camera1 = mainCam;
+			}
+			mainCamOn = !mainCamOn
 			break;
 	}
+
+	// Main camera movement control
+	if (mainCamOn) {
+		switch (event.key) {
+			case "ArrowUp":
+				camera1.vrp = subtract(camera1.vrp, mult(stepRatio, camera1.n));
+				break;
+			case "ArrowDown": 
+				camera1.vrp = add(camera1.vrp, mult(stepRatio, camera1.n));
+				break;
+			case "ArrowLeft": 
+				camera1.vrp = subtract(camera1.vrp, mult(stepRatio, camera1.u));
+				break;
+			case "ArrowRight":
+				camera1.vrp = add(camera1.vrp, mult(stepRatio, camera1.u));
+				break;
+			case "Z":
+				camera1.setRotationZ(-angleStep);
+				break;
+			case "z":
+				camera1.setRotationZ(angleStep);
+				break;
+			case "X":
+				camera1.setRotationX(angleStep);
+				break;
+			case "x":
+				camera1.setRotationX(-angleStep);
+				break;
+			case "C":
+				camera1.setRotationY(-angleStep)
+				break;
+			case "c":
+				camera1.setRotationY(angleStep);
+				break;
+		}
+	}
+
 	camera1.updateCameraMatrix();
 	light2.loc = camera1.vrp;
 	light2.direction = mult(-1,camera1.n);
