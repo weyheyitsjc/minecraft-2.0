@@ -87,12 +87,15 @@ class Camera{
 	}
 }
 
-var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+// var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 // var camera1 = new Camera(vec3(0,35,20),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 // camera1.setRotationX(-60);
 
 // var camera1 = new Camera(vec3(0,30,0),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 // camera1.setRotationX(-90);
+
+var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+
 
 
 var light1 = new Light(vec3(0,0,0), vec3(0,-1,-1), vec4(0.1,0.1,0.1,1.0), vec4(0.4,0.4,0.4,1), vec4(0.3,0.3,0.3,1), 0, 0, 1); // directional light
@@ -274,21 +277,19 @@ window.onload = function init(){
 	makeTree(-15, -20);
 	makeTree(-28, 0);
 
-	for (let i = 0; i < 100; i++) {
-		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
-		var z = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(-30) + 1) + Math.ceil(-30));
-		var temp = [];
-		var xz = vec2(x, z);
+	// for (let i = 0; i < 100; i++) {
+	// 	var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
+	// 	var z = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(-30) + 1) + Math.ceil(-30));
+	// 	var temp = [];
+	// 	var xz = vec2(x, z);
 
-		if (!temp.includes(xz)) {
-			temp.push(xz);
-			cloudList.push(new Cloud(x, 25, z, 4, 0, 0, 0, amb, dif, spec, shine));
-		} else {
-			i-=1;
-		}
-	}
-
-	
+	// 	if (!temp.includes(xz)) {
+	// 		temp.push(xz);
+	// 		cloudList.push(new Cloud(x, 25, z, 4, 0, 0, 0, amb, dif, spec, shine));
+	// 	} else {
+	// 		i-=1;
+	// 	}
+	// }
 
 	objectList.push(new EnvMapCube(0, 5, 0, 4, 0, 0, 0, amb, dif, spec, shine));
 	
