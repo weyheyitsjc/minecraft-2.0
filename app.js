@@ -233,7 +233,7 @@ window.onload = function init(){
 		objectList.push(new Path(-16.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); 
 	}
 
-	for (let i = 0; i < 100; i++) { // top trees
+	for (let i = 0; i < 75; i++) { // top trees
 		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
 		var z = Math.floor(Math.random() * (Math.floor(-30) - Math.ceil(-48) + 1) + Math.ceil(-48));
 		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
@@ -242,7 +242,7 @@ window.onload = function init(){
 		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
 	}
 
-	for (let i = 0; i < 100; i++) { // left trees
+	for (let i = 0; i < 75; i++) { // left trees
 		var x = Math.floor(Math.random() * (Math.floor(-35) - Math.ceil(-48) + 1) + Math.ceil(-48));
 		var z = Math.floor(Math.random() * (Math.floor(31) - Math.ceil(-28) + 1) + Math.ceil(-28));
 
@@ -252,7 +252,7 @@ window.onload = function init(){
 		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
 	}
 
-	for (let i = 0; i < 100; i++) { // bottom trees
+	for (let i = 0; i < 75; i++) { // bottom trees
 		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
 		var z = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(33) + 1) + Math.ceil(33));
 		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
@@ -261,7 +261,7 @@ window.onload = function init(){
 		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
 	}
 
-	for (let i = 0; i < 100; i++) { // right trees
+	for (let i = 0; i < 75; i++) { // right trees
 		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(35) + 1) + Math.ceil(35));
 		var z = Math.floor(Math.random() * (Math.floor(31) - Math.ceil(-28) + 1) + Math.ceil(-28));
 		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
