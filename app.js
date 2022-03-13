@@ -1,6 +1,7 @@
 var canvas;
 var gl;
 var angle = 0.0;
+var rotatingCamAngle = 0.0;
 
 class Light{
     constructor(loc, dir, amb, sp, dif, alpha, cutoff, type){
@@ -87,18 +88,13 @@ class Camera{
 	}
 }
 
-// var camera1 = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
-// var camera1 = new Camera(vec3(0,35,20),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
-// camera1.setRotationX(-60);
-
-// var camera1 = new Camera(vec3(0,30,0),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
-// camera1.setRotationX(-90);
 var mainCam = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
-var rotatingCam = new Camera(vec3(0,30,0),  vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+// var rotatingCam = new Camera(vec3(0,35,20), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+var rotatingCam = new Camera(vec3(0,35,20), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
+
+rotatingCam.setRotationX(-60);
 
 var camera1 = mainCam;
-
-
 
 var light1 = new Light(vec3(0,0,0), vec3(0,-1,-1), vec4(0.1,0.1,0.1,1.0), vec4(0.4,0.4,0.4,1), vec4(0.3,0.3,0.3,1), 0, 0, 1); // directional light
 var light2 = new Light(vec3(0,0,0), mult(-1,camera1.n), vec4(0.6, 0.6, 0.6, 1), vec4(0.9, 0.9, 0.9, 1), vec4(0.8, 0.8, 0.8, 1), 4, 45, 0); // spot light
@@ -237,7 +233,7 @@ window.onload = function init(){
 		objectList.push(new Path(-16.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); 
 	}
 
-	for (let i = 0; i < 50; i++) { // top trees
+	for (let i = 0; i < 100; i++) { // top trees
 		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
 		var z = Math.floor(Math.random() * (Math.floor(-30) - Math.ceil(-48) + 1) + Math.ceil(-48));
 		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
@@ -246,7 +242,7 @@ window.onload = function init(){
 		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
 	}
 
-	for (let i = 0; i < 50; i++) { // left trees
+	for (let i = 0; i < 100; i++) { // left trees
 		var x = Math.floor(Math.random() * (Math.floor(-35) - Math.ceil(-48) + 1) + Math.ceil(-48));
 		var z = Math.floor(Math.random() * (Math.floor(31) - Math.ceil(-28) + 1) + Math.ceil(-28));
 
@@ -256,7 +252,7 @@ window.onload = function init(){
 		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
 	}
 
-	for (let i = 0; i < 50; i++) { // bottom trees
+	for (let i = 0; i < 100; i++) { // bottom trees
 		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
 		var z = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(33) + 1) + Math.ceil(33));
 		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
@@ -265,7 +261,7 @@ window.onload = function init(){
 		objectList.push(new TreeTopTriangle(x, 5.5, z, 0.5, 0, 0, 0, amb, dif, spec, shine));
 	}
 
-	for (let i = 0; i < 50; i++) { // right trees
+	for (let i = 0; i < 100; i++) { // right trees
 		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(35) + 1) + Math.ceil(35));
 		var z = Math.floor(Math.random() * (Math.floor(31) - Math.ceil(-28) + 1) + Math.ceil(-28));
 		objectList.push(new TreeBottomTriangle(x, 0.0, z, 1, 0, 0, 0, amb, dif, spec, shine));
@@ -280,19 +276,19 @@ window.onload = function init(){
 	makeTree(-15, -20);
 	makeTree(-28, 0);
 
-	// for (let i = 0; i < 100; i++) {
-	// 	var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
-	// 	var z = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(-30) + 1) + Math.ceil(-30));
-	// 	var temp = [];
-	// 	var xz = vec2(x, z);
+	for (let i = 0; i < 100; i++) {
+		var x = Math.floor(Math.random() * (Math.floor(48) - Math.ceil(-48) + 1) + Math.ceil(-48));
+		var z = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(-30) + 1) + Math.ceil(-30));
+		var temp = [];
+		var xz = vec2(x, z);
 
-	// 	if (!temp.includes(xz)) {
-	// 		temp.push(xz);
-	// 		cloudList.push(new Cloud(x, 25, z, 4, 0, 0, 0, amb, dif, spec, shine));
-	// 	} else {
-	// 		i-=1;
-	// 	}
-	// }
+		if (!temp.includes(xz)) {
+			temp.push(xz);
+			cloudList.push(new Cloud(x, 25, z, 4, 0, 0, 0, amb, dif, spec, shine));
+		} else {
+			i-=1;
+		}
+	}
 
 	objectList.push(new EnvMapCube(0, 5, 0, 4, 0, 0, 0, amb, dif, spec, shine));
 	
@@ -358,6 +354,8 @@ function render(){
 			cloudList[i].updateModelMatrix();
 			cloudList[i].draw();   
         }
+		rotatingCamAngle = (rotatingCamAngle + 1) % 360;
+		this.rotateCamera(rotatingCamAngle, 20, 35);
 
     }, 100 );  //10fps
 }
@@ -463,4 +461,17 @@ function makeSlime(x, z, rotateY = 0) {
 	bigSlime.push(new Slime(x, 1, z, 2, 0, rotateY, 0, amb, dif, spec, shine));
 	smallSlime.push(new Slime(x-0.75, 2.5, z, 1, 0, rotateY, 0, amb, dif, spec, shine));
 	smallSlime.push(new Slime(x+0.75, 2.5, z, 1, 0, rotateY, 0, amb, dif, spec, shine));
+}
+
+function rotateCamera(angle, r , h){
+    let radian = angle * Math.PI / 180;
+    x = r*Math.sin(radian);
+    y = h;
+    z = r*Math.cos(radian);
+    rotatingCam.vrp = vec3(x,y,z);
+    rotatingCam.n = normalize(subtract(rotatingCam.vrp, vec3(0,0,0)));
+    let tempV = vec3(0,1,0);
+    rotatingCam.u = normalize(cross(tempV,rotatingCam.n));
+    rotatingCam.v = normalize(cross(rotatingCam.n,rotatingCam.u));
+    rotatingCam.updateCameraMatrix();
 }
