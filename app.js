@@ -89,7 +89,6 @@ class Camera{
 }
 
 var mainCam = new Camera(vec3(0,2,10), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
-// var rotatingCam = new Camera(vec3(0,35,20), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 var rotatingCam = new Camera(vec3(0,35,20), vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));
 
 rotatingCam.setRotationX(-60);
@@ -176,6 +175,7 @@ window.onload = function init(){
 
 	objectList.push(new HouseBottom(0, 4, -20, 8, 0, 0, 0, amb, dif, spec, shine)); // main house
 	objectList.push(new HouseTopBrick(0, 8, -20, 4.5, 0, 0, 0, amb, dif, spec, shine)); // main house
+	objectList.push(new Chimney(3, 11, -20, 1.5, 0, 0, 0, amb, dif, spec, shine)); // main house
 
 	for (let i = -5; i >= -17; i--) {
 		objectList.push(new Path(-0.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // path to main house
@@ -184,6 +184,7 @@ window.onload = function init(){
 	
 	objectList.push(new HouseBottom(-25, 4, -15, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 	objectList.push(new HouseTopWood(-25, 8, -15, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
+	objectList.push(new Chimney(-22, 11, -15, 1.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 
 	for (let i = -5; i >= -25; i--) {
 		objectList.push(new Path(i, 0.005, -0.5, 1, 0, 0, 0, amb, dif, spec, shine)); // path to 1st house
@@ -197,7 +198,7 @@ window.onload = function init(){
 
 	objectList.push(new HouseBottom(25, 4, -13, 8, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
 	objectList.push(new HouseTopBrick(25, 8, -13, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
-
+	objectList.push(new Chimney(28, 11, -13, 1.5, 0, 0, 0, amb, dif, spec, shine)); // 2nd house
 	
 	for (let i = 5; i <= 25; i++) {
 		objectList.push(new Path(i, 0.005, -0.5, 1, 0, 0, 0, amb, dif, spec, shine)); // path to 1st house
@@ -211,6 +212,7 @@ window.onload = function init(){
 
 	objectList.push(new HouseBottom(0, 4, 23, 8, 0, 180, 0, amb, dif, spec, shine)); // 3rd house
 	objectList.push(new HouseTopWood(0, 8, 23, 4.5, 0, 180, 0, amb, dif, spec, shine)); // 3rd house
+	objectList.push(new Chimney(3, 11, 23, 1.5, 0, 0, 0, amb, dif, spec, shine)); // 3rd house
 
 	for (let i = 5; i <= 20; i++) {
 		objectList.push(new Path(-0.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // path to main house
@@ -219,6 +221,7 @@ window.onload = function init(){
 
 	objectList.push(new HouseBottom(17, 4, 14, 8, 0, 180, 0, amb, dif, spec, shine)); // 4th house
 	objectList.push(new HouseTopBrick(17, 8, 14, 4.5, 0, 180, 0, amb, dif, spec, shine)); // 4th house
+	objectList.push(new Chimney(20, 11, 14, 1.5, 0, 0, 0, amb, dif, spec, shine)); // 4th house
 
 	for (let i = 1; i <= 10; i++) {
 		objectList.push(new Path(17.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // path to 5th house
@@ -227,6 +230,7 @@ window.onload = function init(){
 
 	objectList.push(new HouseBottom(-17, 4, 13, 8, 0, 180, 0, amb, dif, spec, shine)); // 5th house
 	objectList.push(new HouseTopWood(-17, 8, 13, 4.5, 0, 180, 0, amb, dif, spec, shine)); // 5th house
+	objectList.push(new Chimney(-14, 11, 13, 1.5, 0, 0, 0, amb, dif, spec, shine)); // 5th house
 
 	for (let i = 1; i <= 9; i++) {
 		objectList.push(new Path(-17.5, 0.005, i, 1, 0, 0, 0, amb, dif, spec, shine)); // path to 5th house
