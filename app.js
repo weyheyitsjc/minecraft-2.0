@@ -133,6 +133,7 @@ var objectList = [];
 var cloudList = [];
 var bigSlime = [];
 var smallSlime = [];
+var diamonds = [];
 var amb = vec4(0.7,0.7,0.7,1.0);
 var dif = vec4(0.9,0.9,0.9,1.0);
 var spec = vec4(1.0,1.0,1.0,1.0);
@@ -185,6 +186,8 @@ window.onload = function init(){
 	objectList.push(new HouseBottom(-25, 4, -15, 8, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 	objectList.push(new HouseTopWood(-25, 8, -15, 4.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
 	objectList.push(new Chimney(-22, 11, -15, 1.5, 0, 0, 0, amb, dif, spec, shine)); // 1st house
+
+	diamonds.push(new Diamond(0, 1, 0, 2, 0, 0, 0, amb, dif, spec, shine));
 
 	for (let i = -5; i >= -25; i--) {
 		objectList.push(new Path(i, 0.005, -0.5, 1, 0, 0, 0, amb, dif, spec, shine)); // path to 1st house
@@ -294,9 +297,11 @@ window.onload = function init(){
 		}
 	}
 
-	objectList.push(new EnvMapCube(0, 5, 0, 4, 0, 0, 0, amb, dif, spec, shine));
+	objectList.push(new EnvMapCube(0, 7, 0, 4, 0, 0, 0, amb, dif, spec, shine));
 	
 	window.addEventListener("keydown", keyBoardFunction);
+
+	window.addEventListener("click", clickDiamond);
 	
     render();
 };
@@ -358,6 +363,11 @@ function render(){
 			cloudList[i].updateModelMatrix();
 			cloudList[i].draw();   
         }
+
+		for (var i = 0; i<diamonds.length; i++) {
+			diamonds[i].draw();   
+        }
+
 		rotatingCamAngle = (rotatingCamAngle + 1) % 360;
 		this.rotateCamera(rotatingCamAngle, 20, 35);
 
@@ -478,4 +488,54 @@ function rotateCamera(angle, r , h){
     rotatingCam.u = normalize(cross(tempV,rotatingCam.n));
     rotatingCam.v = normalize(cross(rotatingCam.n,rotatingCam.u));
     rotatingCam.updateCameraMatrix();
+}
+
+function clickDiamond(event) {
+	let clippingXPos = 2 * (event.clientX / document.getElementById('gl-canvas').width) - 1;
+	let clippingYPos = 1 - 2 * (event.clientY / document.getElementById('gl-canvas').height);
+	let pFront = vec4(clippingXPos, clippingYPos, -1, 1);
+
+	let inverseProjection = inverse(camera1.projectionMatrix);
+	let pCam = mult(inverseProjection, pFront);
+
+	pCam[0] /= pCam[3];
+	pCam[1] /= pCam[3];
+	pCam[2] /= pCam[3];
+	pCam[3] /= pCam[3];
+
+	let inverseCamera = inverse(camera1.cameraMatrix);
+	let pWorld = mult(inverseCamera, pCam);
+	pWorld[0] /= pWorld[3];
+	pWorld[1] /= pWorld[3];
+	pWorld[2] /= pWorld[3];
+	pWorld[3] /= pWorld[3];
+
+	for (let i = 0; i < diamonds.length; i++) {
+		let lastDiamond = diamonds[diamonds.length - 1];
+		if ((Math.abs(diamonds[i].tx - pWorld[0]) < (diamonds[i].scale * 0.5)) && (Math.abs(diamonds[i].ty - pWorld[1]) < (diamonds[i].scale * 0.5))) { 
+			if (diamonds.length < 2) {
+				diamonds.push(new Diamond(lastDiamond.tx, lastDiamond.ty+2, lastDiamond.tz, lastDiamond.scale, 0, 0, 0, amb, dif, spec, shine));
+			} else {
+				let newDiamond = diamonds[0];
+				diamonds = [newDiamond];
+			}
+			break;
+		} else if ((Math.abs(diamonds[i].tx - pWorld[0]) < (diamonds[i].scale * 0.5)) && (Math.abs(diamonds[i].tz - pWorld[2]) < (diamonds[i].scale * 0.5))) { 
+			if (diamonds.length < 2) {
+				diamonds.push(new Diamond(lastDiamond.tx, lastDiamond.ty+2, lastDiamond.tz, lastDiamond.scale, 0, 0, 0, amb, dif, spec, shine));
+			} else {
+				let newDiamond = diamonds[0];
+				diamonds = [newDiamond];
+			}
+			break;
+		} else if ((Math.abs(diamonds[i].ty - pWorld[1]) < (diamonds[i].scale * 0.5)) && (Math.abs(diamonds[i].tz - pWorld[2]) < (diamonds[i].scale * 0.5))) {
+			if (diamonds.length < 2) {
+				diamonds.push(new Diamond(lastDiamond.tx, lastDiamond.ty+2, lastDiamond.tz, lastDiamond.scale, 0, 0, 0, amb, dif, spec, shine));
+			} else {
+				let newDiamond = diamonds[0];
+				diamonds = [newDiamond];
+			}
+			break;
+		}
+	}
 }

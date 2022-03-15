@@ -277,6 +277,10 @@ class EnvMapCube extends Drawable{
                 cloudList[i].draw();
             }
 
+            for (var i = 0; i<diamonds.length; i++) {
+                diamonds[i].draw();   
+            }
+
             EnvMapCube.imageLoaded ++;
         }
 
